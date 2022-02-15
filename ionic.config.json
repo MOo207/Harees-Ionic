@@ -1,0 +1,7 @@
+{
+  "name": "Harees",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

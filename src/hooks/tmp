@@ -1,0 +1,35 @@
+// import axios from 'axios';
+// import { useState, useEffect } from 'react';
+
+// export function sendRequest() {
+
+//     const [labels, setLabels] = useState<any>();
+
+//     useEffect(() => {
+//         sendRequest().then(data => {
+//             setLabels(data.data)
+//     });
+//     }, []);
+
+    
+//     const sendRequest = () => {
+//         return axios
+//             .post('https://6ephm1ugac.execute-api.us-east-2.amazonaws.com/api/detectObjects', {
+//                 headers: {
+//                     'Content-Type': 'application/json'
+//                 },
+//                 body: {
+//                     "fileName": "clipimage.jpg"
+//                 }
+//             })
+//             .then((response) => {
+//                 console.log(response);
+//                 return response.data;
+//             })
+//     };
+//     return {
+//         setLabels,
+//         labels,
+
+//     };
+// }
