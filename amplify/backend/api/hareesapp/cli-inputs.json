@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "hareesapp",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "D:\\Projects\\Personal\\missing_childrean\\Harees\\amplify\\backend\\api\\hareesapp\\schema.graphql",
+    "defaultAuthType": {
+      "mode": "API_KEY",
+      "expirationTime": 300,
+      "apiKeyExpirationDate": "2022-12-12T14:44:33.342Z",
+      "keyDescription": "API-KEY"
+    },
+    "conflictResolution": {},
+    "additionalAuthTypes": []
+  }
+}

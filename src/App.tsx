@@ -1,4 +1,3 @@
-import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
@@ -24,31 +23,32 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import Amplify, { Auth } from 'aws-amplify';
+import awsconfig from './aws-exports';
+
+Amplify.configure(awsconfig);
+
+// >>New - Configuring Auth Module
+Auth.configure(awsconfig);
 
 setupIonicReact();
 
 
 const App: React.FC = () => (
   <IonApp>
-    {/* <Authenticator initialState="signUp">
-    {({  signOut , user }) => ( */}
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
-        <Route exact path="/home" >
-          <Home />
-        </Route>
-        <Route exact path="/Result">
-          <Result />
-        </Route>
-      </IonRouterOutlet>
-    </IonReactRouter>
-
-
-    {/* )}
-  </Authenticator> */}
+        <IonReactRouter>
+          <IonRouterOutlet>
+            <Route exact path="/">
+              <Redirect to="/home" />
+            </Route>
+            <Route exact path="/home" >
+              <Home />
+            </Route>
+            <Route exact path="/Result">
+              <Result />
+            </Route>
+          </IonRouterOutlet>
+        </IonReactRouter>
   </IonApp>
 
 );

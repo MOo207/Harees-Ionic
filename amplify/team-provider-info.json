@@ -1,0 +1,26 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-hareesapp-dev-165343-authRole",
+      "UnauthRoleArn": "arn:aws:iam::899875381613:role/amplify-hareesapp-dev-165343-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::899875381613:role/amplify-hareesapp-dev-165343-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-hareesapp-dev-165343-deployment",
+      "UnauthRoleName": "amplify-hareesapp-dev-165343-unauthRole",
+      "StackName": "amplify-hareesapp-dev-165343",
+      "StackId": "arn:aws:cloudformation:us-east-1:899875381613:stack/amplify-hareesapp-dev-165343/b35037f0-8e66-11ec-bdd1-0e24840ffa95",
+      "AmplifyAppId": "d1lpnw7djvzgij"
+    },
+    "categories": {
+      "storage": {
+        "hareesapp754ebc7d": {
+          "bucketName": "harees-images",
+          "region": "us-east-1"
+        }
+      },
+      "auth": {
+        "hareesapp01c7e63e": {}
+      }
+    }
+  }
+}
