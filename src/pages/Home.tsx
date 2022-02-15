@@ -9,10 +9,13 @@ const Home: React.FC = () => {
   const [photoToDelete, setPhotoToDelete] = useState<UserPhoto>();
 
   return (
+
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Photo Gallery</IonTitle>
+          {/* <IonTitle> <h2>Welcome, {user.username}!</h2>
+            <button onClick={signOut}>Sign Out</button></IonTitle> */}
+            <IonTitle> <h2>Welcome</h2> </IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
