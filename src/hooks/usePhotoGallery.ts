@@ -44,9 +44,11 @@ export function usePhotoGallery() {
       const newPhotos = [savedFileImage, ...photos];
       setPhotos(newPhotos);
       Storage.set({key: PHOTO_STORAGE,value: JSON.stringify(newPhotos)});
-      
+      var imgBase64 = await base64FromPath(savedFileImage.filepath);
+      return imgBase64;
     } catch (error) {
-      console.log("no photo taken");
+      console.log(error);
+      return error;
     }
   };
 
@@ -114,7 +116,7 @@ export interface UserPhoto {
 }
 
 export async function base64FromPath(path: string): Promise<string> {
-  const response = await fetch(path);
+  const response = await fetch(path.replace("file://", ""));
   const blob = await response.blob();
   return new Promise((resolve, reject) => {
     const reader = new FileReader();

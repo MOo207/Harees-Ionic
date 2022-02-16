@@ -25,6 +25,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from './aws-exports';
+import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react';
 
 Amplify.configure(awsconfig);
 
@@ -33,9 +34,8 @@ Auth.configure(awsconfig);
 
 setupIonicReact();
 
-
 const App: React.FC = () => (
-  <IonApp>
+      <IonApp>
         <IonReactRouter>
           <IonRouterOutlet>
             <Route exact path="/">
@@ -49,8 +49,7 @@ const App: React.FC = () => (
             </Route>
           </IonRouterOutlet>
         </IonReactRouter>
-  </IonApp>
-
+      </IonApp>
 );
 
 export default App;
