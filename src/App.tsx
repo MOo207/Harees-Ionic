@@ -24,9 +24,6 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import Amplify, { Auth, Storage, API } from 'aws-amplify';
 import awsconfig from './aws-exports';
-import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react';
-
-Amplify.configure(awsconfig);
 
 // >>New - Configuring Auth Module
 Auth.configure(awsconfig);

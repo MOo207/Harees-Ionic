@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { isPlatform } from '@ionic/react';
 
 
-import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
+import { Camera, CameraResultType, Photo } from '@capacitor/camera';
 import { Filesystem, Directory } from '@capacitor/filesystem'
 import { Storage } from '@capacitor/storage'
 import { Capacitor } from '@capacitor/core';
@@ -14,7 +14,7 @@ export function usePhotoGallery() {
 
   useEffect(() => {
     const loadSaved = async () => {
-      const {value} = await Storage.get({key: PHOTO_STORAGE });
+      const { value } = await Storage.get({ key: PHOTO_STORAGE });
 
       const photosInStorage = (value ? JSON.parse(value) : []) as UserPhoto[];
       // If running on the web...
@@ -33,22 +33,42 @@ export function usePhotoGallery() {
     loadSaved();
   }, []);
 
+  const readAsBase64 = async (cameraPhoto: any) => {
+    // Fetch the photo, read as a blob, then convert to base64 format
+    const response = await fetch(cameraPhoto.webPath!);
+    const blob = await response.blob();
+
+    return await convertBlobToBase64(blob) as string;
+  }
+
+  const convertBlobToBase64 = async (blob: Blob) => new Promise((resolve, reject) => {
+    const reader = new FileReader;
+    reader.onerror = reject;
+    reader.onload = () => {
+      resolve(reader.result);
+    };
+    reader.readAsDataURL(blob);
+  });
+
   const takePhoto = async () => {
     try {
       const cameraPhoto = await Camera.getPhoto({
         resultType: CameraResultType.Uri,
-        quality: 100
+        quality: 100,
+        saveToGallery: true
       });
       const fileName = new Date().getTime() + '.jpeg';
       const savedFileImage = await savePicture(cameraPhoto, fileName);
       const newPhotos = [savedFileImage, ...photos];
       setPhotos(newPhotos);
-      Storage.set({key: PHOTO_STORAGE,value: JSON.stringify(newPhotos)});
-      var imgBase64 = await base64FromPath(savedFileImage.filepath);
-      return imgBase64;
+      Storage.set({ key: PHOTO_STORAGE, value: JSON.stringify(newPhotos) });
+      console.log(cameraPhoto);
+      const response = await fetch(cameraPhoto.webPath!);
+      const blob = await response.blob();
+      return blob;
     } catch (error) {
       console.log(error);
-      return error;
+      // return error;
     }
   };
 
@@ -92,7 +112,7 @@ export function usePhotoGallery() {
     const newPhotos = photos.filter(p => p.filepath !== photo.filepath);
 
     // Update photos array cache by overwriting the existing photo array
-    Storage.set({key: PHOTO_STORAGE, value: JSON.stringify(newPhotos) });
+    Storage.set({ key: PHOTO_STORAGE, value: JSON.stringify(newPhotos) });
 
     // delete photo file from filesystem
     const filename = photo.filepath.substr(photo.filepath.lastIndexOf('/') + 1);

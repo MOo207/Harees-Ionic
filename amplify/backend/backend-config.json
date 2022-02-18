@@ -36,22 +36,27 @@
     }
   },
   "api": {
-    "hareesapp": {
-      "service": "AppSync",
+    "hareesappapi": {
+      "service": "API Gateway",
       "providerPlugin": "awscloudformation",
-      "output": {
-        "authConfig": {
-          "defaultAuthentication": {
-            "authenticationType": "API_KEY",
-            "apiKeyConfig": {
-              "apiKeyExpirationDays": 300,
-              "apiKeyExpirationDate": "2022-12-12T14:44:33.342Z",
-              "description": "API-KEY"
-            }
-          },
-          "additionalAuthenticationProviders": []
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "hareesappb61f05a7",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
         }
-      }
+      ]
+    }
+  },
+  "function": {
+    "hareesappb61f05a7": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": []
     }
   }
 }
