@@ -27,14 +27,10 @@ const Home: React.FC = () => {
     return compareFaceResult;
   }
   return (
-    <Authenticator initialState="signUp" signUpAttributes={["email"]} loginMechanisms={['email']}>
-      {({ signOut, user }) => (
+   
         <IonPage>
           <IonHeader>
             <IonToolbar>
-              <IonButton onClick={signOut} color='white' slot='end'>
-                <IonIcon slot="icon-only" icon={logOut}></IonIcon>
-              </IonButton>
               <IonTitle>Harees</IonTitle>
             </IonToolbar>
           </IonHeader>
@@ -93,8 +89,7 @@ const Home: React.FC = () => {
           </IonContent>
 
         </IonPage>
-      )}
-    </Authenticator>
+  
   );
 };
 
