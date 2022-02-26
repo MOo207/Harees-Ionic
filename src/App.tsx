@@ -23,7 +23,6 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import { Auth, Storage, API } from 'aws-amplify';
 import awsconfig from './aws-exports';
-import { TabsRoot } from './pages/TabsRoot';
 import { home, person, add } from 'ionicons/icons';
 import AddReport from './pages/AddReport';
 import Home from './pages/Home';
@@ -51,6 +50,7 @@ const App: React.FC = () => (
               <Route path="/tabs" render={() => <Redirect to="/tab1" />} exact={true} />
               <Route path="/" render={() => <Redirect to="/tab1" />} exact={true} />
             </IonRouterOutlet>
+            
             <IonTabBar slot="bottom">
               <IonTabButton tab="tab1" href="/tab1">
                 <IonIcon icon={home} />

@@ -1,62 +1,61 @@
-import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel, IonButton } from '@ionic/react';
-import { pin, wifi, wine, warning, walk } from 'ionicons/icons';
+import React, { useState } from 'react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel, IonButton, IonInput, IonItemDivider, IonRow, IonText, IonList } from '@ionic/react';
+import { DataStore } from '@aws-amplify/datastore';
+import { Child } from '../models';
+
 
 const AddReport: React.FC = () => {
+
+  const [text, setText] = useState<string>();
+
+  const addReport =async (childName: string) => {
+    try {
+      var res = await DataStore.save(
+        new Child({
+          name: childName
+        })
+      );
+      console.log(res);
+    } catch (error) {
+      console.log("Error saving post", error);
+    }
+  }
+
+  const getReports = async () => {
+    try {
+      var res = await DataStore.query(Child);
+      console.log("Posts retrieved successfully!", JSON.stringify(res, null, 2));
+    } catch (error) {
+      console.log("Error saving post", error);
+    }
+  }
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>CardExamples</IonTitle>
+          <IonTitle>Add missing report</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonCard>
-          <IonCardHeader>
-            <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-            <IonCardTitle>Card Title</IonCardTitle>
-          </IonCardHeader>
+        <IonRow style={{ height: 20 }}></IonRow>
 
-          <IonCardContent>
-            Keep close to Nature's heart... and break clear away, once in awhile,
-            and climb a mountain or spend a week in the woods. Wash your spirit clean.
-      </IonCardContent>
-        </IonCard>
+<div className="ion-text-center" style={{
+}}>Form</div>
+        
+        <IonList style={{
+          "margin-left": "20px",
+          "margin-right": "20px",
+        }}>
+        <IonItem>
+          <IonInput value={text} placeholder="Child Name" onIonChange={e => setText(e.detail.value!)}></IonInput>
+        </IonItem>
 
-        <IonCard>
-          <IonItem>
-            <IonIcon icon={pin} slot="start" />
-            <IonLabel>ion-item in a card, icon left, button right</IonLabel>
-            <IonButton fill="outline" slot="end">View</IonButton>
-          </IonItem>
+        <IonItemDivider></IonItemDivider>
 
-          <IonCardContent>
-            This is content, without any paragraph or header tags,
-            within an ion-cardContent element.
-      </IonCardContent>
-        </IonCard>
+          <IonButton onClick={() => addReport(text as string)}>Add</IonButton>
 
-        <IonCard>
-          <IonItem href="#" className="ion-activated">
-            <IonIcon icon={wifi} slot="start" />
-            <IonLabel>Card Link Item 1 activated</IonLabel>
-          </IonItem>
-
-          <IonItem href="#">
-            <IonIcon icon={wine} slot="start" />
-            <IonLabel>Card Link Item 2</IonLabel>
-          </IonItem>
-
-          <IonItem className="ion-activated">
-            <IonIcon icon={warning} slot="start" />
-            <IonLabel>Card Button Item 1 activated</IonLabel>
-          </IonItem>
-
-          <IonItem>
-            <IonIcon icon={walk} slot="start" />
-            <IonLabel>Card Button Item 2</IonLabel>
-          </IonItem>
-        </IonCard>
+          <IonButton onClick={() => getReports()}>Get</IonButton>
+        </IonList>
       </IonContent>
     </IonPage>
   );

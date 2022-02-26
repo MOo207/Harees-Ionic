@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "@aws-amplify/datastore": "^3.7.6",
     "@aws-amplify/ui-react": "^2.4.0",
     "@capacitor/android": "3.4.1",
     "@capacitor/app": "1.1.0",

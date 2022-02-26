@@ -1,23 +1,29 @@
 import React from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel, IonButton, IonText, IonRow, IonCol } from '@ionic/react';
-import { pin, wifi, wine, warning, walk } from 'ionicons/icons';
+import { wifi, wine, warning, walk } from 'ionicons/icons';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 
 const Profile: React.FC = () => {
     const { user, signOut } = useAuthenticator((context) => [context.user]);
     return (
+        // Page
         <IonPage>
+            {/* Header */}
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>Profile Page</IonTitle>
                 </IonToolbar>
             </IonHeader>
+
+            {/* Body */}
             <IonContent>
                 <IonRow style={{ height: 20 }}></IonRow>
+
                 <IonText style={{
                     "margin-left": "10px",
                     "font-size": 20
                 }}>Account Settings</IonText>
+
                 <IonCard>
                     <IonItem href="#" className="ion-activated">
                         <IonIcon icon={wifi} slot="start" />
@@ -41,10 +47,12 @@ const Profile: React.FC = () => {
                 </IonCard>
 
                 <IonRow style={{ height: 20 }}></IonRow>
+
                 <IonText style={{
                     "margin-left": "10px",
                     "font-size": 20
                 }}>About App</IonText>
+                
                 <IonCard>
                     <IonItem href="#" className="ion-activated">
                         <IonIcon icon={wifi} slot="start" />

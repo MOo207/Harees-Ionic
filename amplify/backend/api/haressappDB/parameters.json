@@ -1,0 +1,5 @@
+{
+  "AppSyncApiName": "haressappDB",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false
+}
