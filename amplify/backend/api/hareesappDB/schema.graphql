@@ -7,3 +7,4 @@ type Child @model {
   name: String!
   image: String
 }
+  

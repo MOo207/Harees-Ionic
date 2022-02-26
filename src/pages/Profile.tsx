@@ -72,10 +72,10 @@ const Profile: React.FC = () => {
                 </IonCard>
 
                 <IonButton expand="block" style={{
-                    "margin-top": "40px",
-                    "margin-left": "10px",
-                    "margin-right": "10px",
-                    "margin-bottom": "20px"
+                    "marginTop": "40px",
+                    "marginLeft": "10px",
+                    "marginRight": "10px",
+                    "marginBottom": "20px"
                 }} color="danger" onClick={signOut}>Logout</IonButton>
             </IonContent>
         </IonPage>

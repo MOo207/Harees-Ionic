@@ -7,10 +7,12 @@ import { usePhotoGallery, UserPhoto } from '../hooks/usePhotoGallery';
 import { Faces } from '../interfaces/faces';
 
 import { Storage, API } from 'aws-amplify';
+import ChildreanCards from '../components/ChildreanCards';
 
 const Home: React.FC = () => {
   const { deletePhoto, photos, takePhoto } = usePhotoGallery();
   const [photoToDelete, setPhotoToDelete] = useState<UserPhoto>();
+  
 
   const uploadS3 = async (object: any) => {
     const result = await Storage.put("Image" + Date.now().toString() + ".jpeg", object);
@@ -41,17 +43,7 @@ const Home: React.FC = () => {
               </IonToolbar>
             </IonHeader>
 
-
-            <IonGrid>
-              <IonRow>
-                {photos.map((photo, index) => (
-                  <IonCol size="6" key={index}>
-                    <IonImg onClick={() => setPhotoToDelete(photo)} src={photo.webviewPath} />
-                  </IonCol>
-                ))}
-              </IonRow>
-            </IonGrid>
-
+            <ChildreanCards/>
 
             <IonFab vertical="bottom" horizontal="center" slot="fixed">
               <IonFabButton onClick={async () => {
@@ -59,7 +51,7 @@ const Home: React.FC = () => {
                 var s3Key = await uploadS3(image);
                 const response: Faces = await apiCall(s3Key.key);
                 console.log(response);
-                alert("Similarity: " + response.FaceMatches[0].Similarity);
+                // alert("Similarity: " + response.FaceMatches[0].Similarity);
               }
               }>
                 <IonIcon icon={camera}></IonIcon>

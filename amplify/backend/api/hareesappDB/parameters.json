@@ -1,0 +1,6 @@
+{
+  "AppSyncApiName": "hareesappDB",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthModeLastUpdated": "2022-02-26T14:44:41.107Z"
+}
