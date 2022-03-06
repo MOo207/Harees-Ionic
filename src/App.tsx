@@ -21,7 +21,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import { Auth, Storage, API } from 'aws-amplify';
+import Amplify, { Auth, Storage, API } from 'aws-amplify';
 import awsconfig from './aws-exports';
 import { home, person, add } from 'ionicons/icons';
 import AddReport from './pages/AddReport';
@@ -29,6 +29,7 @@ import Home from './pages/Home';
 import Profile from './pages/Profile';
 import { Authenticator } from '@aws-amplify/ui-react';
 
+Amplify.configure(awsconfig);
 // >>New - Configuring Auth Module
 Auth.configure(awsconfig);
 API.configure(awsconfig);

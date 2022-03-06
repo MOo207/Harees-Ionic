@@ -43,8 +43,8 @@ const AddReport: React.FC = () => {
 }}>Form</div>
         
         <IonList style={{
-          "margin-left": "20px",
-          "margin-right": "20px",
+          "marginLeft": "20px",
+          "marginRight": "20px",
         }}>
         <IonItem>
           <IonInput value={text} placeholder="Child Name" onIonChange={e => setText(e.detail.value!)}></IonInput>

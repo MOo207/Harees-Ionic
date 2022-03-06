@@ -20,7 +20,7 @@ const Profile: React.FC = () => {
                 <IonRow style={{ height: 20 }}></IonRow>
 
                 <IonText style={{
-                    "margin-left": "10px",
+                    "marginLeft": "10px",
                     "font-size": 20
                 }}>Account Settings</IonText>
 
@@ -49,7 +49,7 @@ const Profile: React.FC = () => {
                 <IonRow style={{ height: 20 }}></IonRow>
 
                 <IonText style={{
-                    "margin-left": "10px",
+                    "marginLeft": "10px",
                     "font-size": 20
                 }}>About App</IonText>
                 
