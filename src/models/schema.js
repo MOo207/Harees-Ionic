@@ -1,7 +1,7 @@
 export const schema = {
     "models": {
-        "Child": {
-            "name": "Child",
+        "Report": {
+            "name": "Report",
             "fields": {
                 "id": {
                     "name": "id",
@@ -10,15 +10,57 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "image": {
+                    "name": "image",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "name": {
                     "name": "name",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
-                "image": {
-                    "name": "image",
+                "age": {
+                    "name": "age",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "nationalID": {
+                    "name": "nationalID",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "height": {
+                    "name": "height",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "weight": {
+                    "name": "weight",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "dateTime": {
+                    "name": "dateTime",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "location": {
+                    "name": "location",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -42,7 +84,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "Children",
+            "pluralName": "Reports",
             "attributes": [
                 {
                     "type": "model",
@@ -53,5 +95,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "a77b376acb3a253820588a4b735871b9"
+    "version": "e9cc37b475a840e4d068737bd18bf625"
 };

@@ -2,9 +2,21 @@ import React from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel, IonButton, IonText, IonRow, IonCol } from '@ionic/react';
 import { wifi, wine, warning, walk } from 'ionicons/icons';
 import { useAuthenticator } from '@aws-amplify/ui-react';
+import { Report } from '../models';
+import { DataStore } from '@aws-amplify/datastore';
 
 const Profile: React.FC = () => {
     const { user, signOut } = useAuthenticator((context) => [context.user]);
+
+    const deleteData =async () => {
+        try {
+          var res = await DataStore.delete(Report, "ac53ca3-4ca3-4954-9d40-aab25f7e342f");
+          console.log(res);
+        } catch (error) {
+          console.log("Error", error);
+        }
+      }
+      
     return (
         // Page
         <IonPage>
@@ -21,7 +33,7 @@ const Profile: React.FC = () => {
 
                 <IonText style={{
                     "marginLeft": "10px",
-                    "font-size": 20
+                    "fontSize": 20
                 }}>Account Settings</IonText>
 
                 <IonCard>
@@ -50,21 +62,22 @@ const Profile: React.FC = () => {
 
                 <IonText style={{
                     "marginLeft": "10px",
-                    "font-size": 20
+                    "fontSize": 20
                 }}>About App</IonText>
                 
                 <IonCard>
-                    <IonItem href="#" className="ion-activated">
+
+                    <IonItem href="/faqs" className="ion-activated">
                         <IonIcon icon={wifi} slot="start" />
                         <IonLabel>FAQS</IonLabel>
                     </IonItem>
 
-                    <IonItem href="#">
+                    <IonItem className="ion-activated"> 
                         <IonIcon icon={wine} slot="start" />
                         <IonLabel>Privacy & Policy</IonLabel>
                     </IonItem>
 
-                    <IonItem className="ion-activated">
+                    <IonItem href="/about" className="ion-activated">
                         <IonIcon icon={warning} slot="start" />
                         <IonLabel>About us</IonLabel>
                     </IonItem>
@@ -77,6 +90,12 @@ const Profile: React.FC = () => {
                     "marginRight": "10px",
                     "marginBottom": "20px"
                 }} color="danger" onClick={signOut}>Logout</IonButton>
+                <IonButton expand="block" style={{
+                    "marginTop": "40px",
+                    "marginLeft": "10px",
+                    "marginRight": "10px",
+                    "marginBottom": "20px"
+                }} color="danger" onClick={deleteData}>delete</IonButton>
             </IonContent>
         </IonPage>
     );

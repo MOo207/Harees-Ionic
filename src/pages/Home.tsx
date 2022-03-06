@@ -10,7 +10,7 @@ import { Storage, API } from 'aws-amplify';
 import ChildreanCards from '../components/ChildreanCards';
 
 const Home: React.FC = () => {
-  const { deletePhoto, photos, takePhoto } = usePhotoGallery();
+  const { deletePhoto, takePhoto } = usePhotoGallery();
   const [photoToDelete, setPhotoToDelete] = useState<UserPhoto>();
   
 

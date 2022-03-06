@@ -28,6 +28,9 @@ import AddReport from './pages/AddReport';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import { Authenticator } from '@aws-amplify/ui-react';
+import FAQS from './pages/Faqs';
+import About from './pages/About';
+import MainTabs from './pages/MainTabs';
 
 Amplify.configure(awsconfig);
 // >>New - Configuring Auth Module
@@ -43,33 +46,20 @@ const App: React.FC = () => (
     {({ signOut, user }) => (
       <IonApp>
         <IonReactRouter>
-          <IonTabs>
-            <IonRouterOutlet>
-              <Route path="/tab1" component={Home} exact={true} />
-              <Route path="/tab2" component={Profile} exact={true} />
-              <Route path="/tab3" component={AddReport} />
-              <Route path="/tabs" render={() => <Redirect to="/tab1" />} exact={true} />
-              <Route path="/" render={() => <Redirect to="/tab1" />} exact={true} />
-            </IonRouterOutlet>
-            
-            <IonTabBar slot="bottom">
-              <IonTabButton tab="tab1" href="/tab1">
-                <IonIcon icon={home} />
-                <IonLabel>Home</IonLabel>
-                <IonBadge>6</IonBadge>
-              </IonTabButton>
-
-              <IonTabButton tab="tab2" href="/tab2">
-                <IonIcon icon={person} />
-                <IonLabel>Profile</IonLabel>
-              </IonTabButton>
-
-              <IonTabButton tab="tab3" href="/tab3">
-                <IonIcon icon={add} />
-                <IonLabel>Add Report</IonLabel>
-              </IonTabButton>
-            </IonTabBar>
-          </IonTabs>
+          <IonReactRouter>
+            <Route exact path="/">
+              <Redirect to="/home" />
+            </Route>
+            <Route exact path="/home" >
+              <MainTabs />
+            </Route>
+            <Route exact path="/about" >
+              <About />
+            </Route>
+            <Route exact path="/faqs" >
+              <FAQS />
+            </Route>
+          </IonReactRouter>
         </IonReactRouter>
       </IonApp>
     )}

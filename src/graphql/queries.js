@@ -1,12 +1,18 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getChild = /* GraphQL */ `
-  query GetChild($id: ID!) {
-    getChild(id: $id) {
+export const getReport = /* GraphQL */ `
+  query GetReport($id: ID!) {
+    getReport(id: $id) {
       id
-      name
       image
+      name
+      age
+      nationalID
+      height
+      weight
+      dateTime
+      location
       createdAt
       updatedAt
       _version
@@ -15,17 +21,23 @@ export const getChild = /* GraphQL */ `
     }
   }
 `;
-export const listChildren = /* GraphQL */ `
-  query ListChildren(
-    $filter: ModelChildFilterInput
+export const listReports = /* GraphQL */ `
+  query ListReports(
+    $filter: ModelReportFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listChildren(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listReports(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        name
         image
+        name
+        age
+        nationalID
+        height
+        weight
+        dateTime
+        location
         createdAt
         updatedAt
         _version
@@ -37,14 +49,14 @@ export const listChildren = /* GraphQL */ `
     }
   }
 `;
-export const syncChildren = /* GraphQL */ `
-  query SyncChildren(
-    $filter: ModelChildFilterInput
+export const syncReports = /* GraphQL */ `
+  query SyncReports(
+    $filter: ModelReportFilterInput
     $limit: Int
     $nextToken: String
     $lastSync: AWSTimestamp
   ) {
-    syncChildren(
+    syncReports(
       filter: $filter
       limit: $limit
       nextToken: $nextToken
@@ -52,8 +64,14 @@ export const syncChildren = /* GraphQL */ `
     ) {
       items {
         id
-        name
         image
+        name
+        age
+        nationalID
+        height
+        weight
+        dateTime
+        location
         createdAt
         updatedAt
         _version

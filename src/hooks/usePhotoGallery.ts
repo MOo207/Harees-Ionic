@@ -41,14 +41,14 @@ export function usePhotoGallery() {
   //   return await convertBlobToBase64(blob) as string;
   // }
 
-  // const convertBlobToBase64 = async (blob: Blob) => new Promise((resolve, reject) => {
-  //   const reader = new FileReader;
-  //   reader.onerror = reject;
-  //   reader.onload = () => {
-  //     resolve(reader.result);
-  //   };
-  //   reader.readAsDataURL(blob);
-  // });
+  const convertBlobToBase64 = async (blob: Blob) => new Promise((resolve, reject) => {
+    const reader = new FileReader;
+    reader.onerror = reject;
+    reader.onload = () => {
+      resolve(reader.result);
+    };
+    reader.readAsDataURL(blob);
+  });
 
   const takePhoto = async () => {
     try {
@@ -65,6 +65,7 @@ export function usePhotoGallery() {
       console.log(cameraPhoto);
       const response = await fetch(cameraPhoto.webPath!);
       const blob = await response.blob();
+
       return blob;
     } catch (error) {
       console.log(error);
@@ -125,8 +126,8 @@ export function usePhotoGallery() {
 
   return {
     deletePhoto,
-    photos,
-    takePhoto
+    convertBlobToBase64,
+    takePhoto,
   };
 }
 

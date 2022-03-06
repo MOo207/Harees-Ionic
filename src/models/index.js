@@ -4,8 +4,8 @@ import { schema } from './schema';
 
 
 
-const { Child } = initSchema(schema);
+const { Report } = initSchema(schema);
 
 export {
-  Child
+  Report
 };

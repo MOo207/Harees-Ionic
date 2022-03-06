@@ -1,15 +1,21 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createChild = /* GraphQL */ `
-  mutation CreateChild(
-    $input: CreateChildInput!
-    $condition: ModelChildConditionInput
+export const createReport = /* GraphQL */ `
+  mutation CreateReport(
+    $input: CreateReportInput!
+    $condition: ModelReportConditionInput
   ) {
-    createChild(input: $input, condition: $condition) {
+    createReport(input: $input, condition: $condition) {
       id
-      name
       image
+      name
+      age
+      nationalID
+      height
+      weight
+      dateTime
+      location
       createdAt
       updatedAt
       _version
@@ -18,15 +24,21 @@ export const createChild = /* GraphQL */ `
     }
   }
 `;
-export const updateChild = /* GraphQL */ `
-  mutation UpdateChild(
-    $input: UpdateChildInput!
-    $condition: ModelChildConditionInput
+export const updateReport = /* GraphQL */ `
+  mutation UpdateReport(
+    $input: UpdateReportInput!
+    $condition: ModelReportConditionInput
   ) {
-    updateChild(input: $input, condition: $condition) {
+    updateReport(input: $input, condition: $condition) {
       id
-      name
       image
+      name
+      age
+      nationalID
+      height
+      weight
+      dateTime
+      location
       createdAt
       updatedAt
       _version
@@ -35,15 +47,21 @@ export const updateChild = /* GraphQL */ `
     }
   }
 `;
-export const deleteChild = /* GraphQL */ `
-  mutation DeleteChild(
-    $input: DeleteChildInput!
-    $condition: ModelChildConditionInput
+export const deleteReport = /* GraphQL */ `
+  mutation DeleteReport(
+    $input: DeleteReportInput!
+    $condition: ModelReportConditionInput
   ) {
-    deleteChild(input: $input, condition: $condition) {
+    deleteReport(input: $input, condition: $condition) {
       id
-      name
       image
+      name
+      age
+      nationalID
+      height
+      weight
+      dateTime
+      location
       createdAt
       updatedAt
       _version

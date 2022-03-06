@@ -1,12 +1,18 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateChild = /* GraphQL */ `
-  subscription OnCreateChild {
-    onCreateChild {
+export const onCreateReport = /* GraphQL */ `
+  subscription OnCreateReport {
+    onCreateReport {
       id
-      name
       image
+      name
+      age
+      nationalID
+      height
+      weight
+      dateTime
+      location
       createdAt
       updatedAt
       _version
@@ -15,12 +21,18 @@ export const onCreateChild = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateChild = /* GraphQL */ `
-  subscription OnUpdateChild {
-    onUpdateChild {
+export const onUpdateReport = /* GraphQL */ `
+  subscription OnUpdateReport {
+    onUpdateReport {
       id
-      name
       image
+      name
+      age
+      nationalID
+      height
+      weight
+      dateTime
+      location
       createdAt
       updatedAt
       _version
@@ -29,12 +41,18 @@ export const onUpdateChild = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteChild = /* GraphQL */ `
-  subscription OnDeleteChild {
-    onDeleteChild {
+export const onDeleteReport = /* GraphQL */ `
+  subscription OnDeleteReport {
+    onDeleteReport {
       id
-      name
       image
+      name
+      age
+      nationalID
+      height
+      weight
+      dateTime
+      location
       createdAt
       updatedAt
       _version
