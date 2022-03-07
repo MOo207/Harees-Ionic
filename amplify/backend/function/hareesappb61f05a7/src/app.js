@@ -1,4 +1,7 @@
 /* Amplify Params - DO NOT EDIT
+	ENV
+	REGION
+Amplify Params - DO NOT EDIT *//* Amplify Params - DO NOT EDIT
   ENV
   REGION
 Amplify Params - DO NOT EDIT *//*
@@ -40,6 +43,8 @@ const axios = require("axios");
 
 app.post('/api/faceCompare', function (req, res) {
   const sourceImage = req.body.sourceImage;
+  console.log(req.body);
+  console.log(sourceImage);
   axios
     .post('https://418q8jxfcf.execute-api.us-east-1.amazonaws.com/manual/faceCompare', {
       headers: {

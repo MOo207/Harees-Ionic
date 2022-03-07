@@ -10,7 +10,7 @@ const Profile: React.FC = () => {
 
     const deleteData =async () => {
         try {
-          var res = await DataStore.delete(Report, "ac53ca3-4ca3-4954-9d40-aab25f7e342f");
+          var res = await DataStore.delete(Report, "ff4d5855-154e-4222-8578-b7998584329d");
           console.log(res);
         } catch (error) {
           console.log("Error", error);

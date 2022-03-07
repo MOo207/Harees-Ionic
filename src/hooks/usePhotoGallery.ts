@@ -33,13 +33,13 @@ export function usePhotoGallery() {
     loadSaved();
   }, []);
 
-  // const readAsBase64 = async (cameraPhoto: any) => {
-  //   // Fetch the photo, read as a blob, then convert to base64 format
-  //   const response = await fetch(cameraPhoto.webPath!);
-  //   const blob = await response.blob();
+  const readAsBase64 = async (cameraPhoto: any) => {
+    // Fetch the photo, read as a blob, then convert to base64 format
+    const response = await fetch(cameraPhoto.webPath!);
+    const blob = await response.blob();
 
-  //   return await convertBlobToBase64(blob) as string;
-  // }
+    return await convertBlobToBase64(blob) as string;
+  }
 
   const convertBlobToBase64 = async (blob: Blob) => new Promise((resolve, reject) => {
     const reader = new FileReader;
@@ -58,15 +58,11 @@ export function usePhotoGallery() {
         saveToGallery: true
       });
       const fileName = new Date().getTime() + '.jpeg';
-      const savedFileImage = await savePicture(cameraPhoto, fileName);
-      const newPhotos = [savedFileImage, ...photos];
-      setPhotos(newPhotos);
-      Storage.set({ key: PHOTO_STORAGE, value: JSON.stringify(newPhotos) });
-      console.log(cameraPhoto);
-      const response = await fetch(cameraPhoto.webPath!);
-      const blob = await response.blob();
-
-      return blob;
+      await savePicture(cameraPhoto, fileName);
+      // const newPhotos = [savedFileImage, ...photos];
+      // setPhotos(newPhotos);
+      // Storage.set({ key: PHOTO_STORAGE, value: JSON.stringify(newPhotos) });
+      return cameraPhoto;
     } catch (error) {
       console.log(error);
       // return error;

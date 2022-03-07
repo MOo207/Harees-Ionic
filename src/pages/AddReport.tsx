@@ -10,6 +10,7 @@ import { usePhotoGallery } from '../hooks/usePhotoGallery';
 const AddReport: React.FC = () => {
 
   const [image, setImage] = useState<string>();
+  const [imageToUpload, setImageToUpload] = useState<Blob>();
   const [name, setName] = useState<string>();
   const [age, setAge] = useState<number>();
   const [NID, setNID] = useState<string>();
@@ -17,8 +18,8 @@ const AddReport: React.FC = () => {
   const [weight, setWeight] = useState<number>();
   const [date, setDate] = useState('2012-12-15T13:47:20.789');
   const [location, setLocation] = useState<string>();
-  const { deletePhoto, convertBlobToBase64, takePhoto } = usePhotoGallery();
-  const addReport = async (name: string, age: number, nationalID: string, image: string, height: number, weight: number, date: any, location: string ) => {
+  const { takePhoto } = usePhotoGallery();
+  const addReport = async (name: string, age: number, nationalID: string, image: string, height: number, weight: number, date: any, location: string) => {
     try {
       var res = await DataStore.save(
         new Report({
@@ -63,28 +64,30 @@ const AddReport: React.FC = () => {
 
         <div className="ion-text-center" style={{
         }}>
-          </div>
+        </div>
 
-          <IonAvatar onClick={async ()=>{
-  var image = await takePhoto() as Blob;
-  const base64 = await convertBlobToBase64(image) as string;
-  setImage(base64);
-}} style={{
-            "height": "150px",
-            "width": "150px",
-            "margin": "auto",
-            "marginBottom": "20px"
-          }}>
-           
-           {image != undefined ? <img src={image} alt=""/> : <img src="https://www.w3schools.com/howto/img_avatar.png" alt=""/>}
-          </IonAvatar>
+        <IonAvatar onClick={async () => {
+          var image = await takePhoto();
+          const imageBlob = await fetch(image?.webPath!);
+          const blob = await imageBlob.blob();
+          setImage(image?.webPath);
+          setImageToUpload(blob);
+        }} style={{
+          "height": "150px",
+          "width": "150px",
+          "margin": "auto",
+          "marginBottom": "20px"
+        }}>
+
+          {image != undefined ? <img src={image} alt="" /> : <img src="assets/images/img_avatar.png" alt="" />}
+        </IonAvatar>
 
         <IonList style={{
           "marginLeft": "20px",
           "marginRight": "20px",
         }}>
 
-          
+
           <IonItem>
             <IonInput type='text' value={name} placeholder="Name" onIonChange={e => setName(e.detail.value!)}></IonInput>
           </IonItem>
@@ -92,7 +95,7 @@ const AddReport: React.FC = () => {
           <IonItemDivider></IonItemDivider>
 
           <IonItem>
-            <IonInput  value={age} placeholder="Age" onIonChange={e => setAge(Number(e.detail.value!))}></IonInput>
+            <IonInput value={age} placeholder="Age" onIonChange={e => setAge(Number(e.detail.value!))}></IonInput>
           </IonItem>
           <IonItemDivider></IonItemDivider>
 
@@ -112,16 +115,16 @@ const AddReport: React.FC = () => {
           <IonItemDivider></IonItemDivider>
 
           <IonItem>
-          <IonDatetime value={date} placeholder="DateTime" onIonChange={e => setDate(e.detail.value!)}></IonDatetime>
+            <IonDatetime value={date} placeholder="DateTime" onIonChange={e => setDate(e.detail.value!)}></IonDatetime>
           </IonItem>
           <IonItemDivider></IonItemDivider>
           <IonItem>
             <IonInput value={location} placeholder="Location" onIonChange={e => setLocation(e.detail.value!)}></IonInput>
           </IonItem>
           <IonItemDivider></IonItemDivider>
-          <IonButton expand='block' onClick={async() => {
-           var s3Key = await uploadS3(image);
-           await addReport(name as string, age as number, NID as string, s3Key.key as string, height as number, weight as number, date as string, location as string);
+          <IonButton expand='block' onClick={async () => {
+            var s3Key = await uploadS3(imageToUpload);
+            await addReport(name as string, age as number, NID as string, s3Key.key as string, height as number, weight as number, date as string, location as string);
           }}>Add</IonButton>
 
           <IonButton expand='block' onClick={() => getReports()}>Get</IonButton>

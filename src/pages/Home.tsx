@@ -7,7 +7,8 @@ import { usePhotoGallery, UserPhoto } from '../hooks/usePhotoGallery';
 import { Faces } from '../interfaces/faces';
 
 import { Storage, API } from 'aws-amplify';
-import ChildreanCards from '../components/ChildreanCards';
+import ReportCards from '../components/ReportCards';
+import axios from 'axios';
 
 const Home: React.FC = () => {
   const { deletePhoto, takePhoto } = usePhotoGallery();
@@ -28,6 +29,38 @@ const Home: React.FC = () => {
     console.log(compareFaceResult);
     return compareFaceResult;
   }
+
+  const sendRequest = (s3Key: any) => {
+    return axios
+      .post('https://418q8jxfcf.execute-api.us-east-1.amazonaws.com/manual/faceCompare', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: {
+          sourceImage: s3Key
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        return response.data as Faces;
+      })
+  };
+  const sendReq = () => {
+    return axios
+      .post('https://418q8jxfcf.execute-api.us-east-1.amazonaws.com/manual/faceCompare', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: {
+          sourceImage: "Image1646659054522.jpeg"
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        return response.data as Faces;
+      })
+  };
+
   return (
    
         <IonPage>
@@ -43,13 +76,16 @@ const Home: React.FC = () => {
               </IonToolbar>
             </IonHeader>
 
-            <ChildreanCards/>
-
+            <ReportCards/>
+            
             <IonFab vertical="bottom" horizontal="center" slot="fixed">
               <IonFabButton onClick={async () => {
                 var image = await takePhoto();
-                var s3Key = await uploadS3(image);
-                const response: Faces = await apiCall(s3Key.key);
+                const imageBlob = await fetch(image?.webPath!);
+                const blob = await imageBlob.blob();
+                var s3Key = await uploadS3(blob);
+                console.log(s3Key.key);
+                const response: Faces = await sendRequest(s3Key.key);
                 console.log(response);
                 // alert("Similarity: " + response.FaceMatches[0].Similarity);
               }
