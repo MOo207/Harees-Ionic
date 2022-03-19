@@ -1,11 +1,18 @@
 import { DataStore } from "@aws-amplify/datastore";
-import { IonAvatar, IonCard, IonCol, IonGrid, IonIcon, IonImg, IonItem, IonLabel, IonList, IonRow, IonText } from "@ionic/react";
+import { IonAvatar, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonGrid, IonIcon, IonImg, IonItem, IonLabel, IonList, IonRow, IonText } from "@ionic/react";
+import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory, NavLink } from "react-router-dom";
 import { Report } from "../models";
 import './ReportCards.css';
 
 const ReportCards: React.FC = () => {
+
+  const history = useHistory();
+
+  const navigate = () => {
+    history.push("/details");
+  };
 
   const [childrean, setChildrean] = useState<Report[]>();
 
@@ -27,67 +34,82 @@ const ReportCards: React.FC = () => {
       setChildrean(childrean);
     });
   }, []);
+  const getItemData = (report: any) => {
+    console.log(report);
+  };
 
   return (
     <IonGrid>
-   
+
       <IonRow>
         {childrean && childrean.map((report, index) => (
-            //  <Link to={{
-            //   pathname: '/details',
-            //   state: { report: report  }
-            // }}> 
-          <IonCol size="12" key={index}>
-            <IonCard>
-              <IonItem>
-                <IonAvatar style={{
-                  "height": "150px",
-                  "width": "150px",
-                  "margin": "auto",
-                  "marginTop": "10px",
-                  "marginBottom": "20px"
-                }}>
-                  <img src={"https://harees-images.s3.amazonaws.com/public/" + report.image} />
-                </IonAvatar>
-              </IonItem>
 
-              <IonRow class="ion-justify-content-around">
-                <IonItem>
-                  <IonText>Name: {report.name}</IonText>
-                </IonItem>
+          
+
+            <IonCol size="12" onClick={() => {
+              getItemData(report);
+            }
+            } key={report.id}>
+              <NavLink to={{
+            pathname: "/details",
+            state: {
+              report: report
+            }
+          }} >
+              <IonCard>
 
                 <IonItem>
-                  <IonText>Age: {report.age}</IonText>
-                </IonItem>
-              </IonRow>
-              <IonRow class="ion-justify-content-around">
-                <IonItem>
-                  <IonText>Height: {report.height}</IonText>
-                </IonItem>
-
-                <IonItem>
-                  <IonText>Weight: {report.weight}</IonText>
-                </IonItem>
-              </IonRow>
-              <IonRow class="ion-justify-content-around">
-                <IonItem>
-                  <IonText>NationalID: {report.nationalID}</IonText>
+                  <IonAvatar style={{
+                    "height": "150px",
+                    "width": "150px",
+                    "margin": "auto",
+                    "marginTop": "10px",
+                    "marginBottom": "20px"
+                  }}>
+                    <img src={"https://harees-images.s3.amazonaws.com/public/" + report.image} />
+                  </IonAvatar>
                 </IonItem>
 
-                <IonItem>
-                  <IonText>Last Seen: {report.location}</IonText>
-                </IonItem>
-              </IonRow>
+                <IonRow class="ion-justify-content-around">
+                  <IonItem>
+                    <IonText>Name: {report.name}</IonText>
+                  </IonItem>
 
-              <IonRow class="ion-justify-content-center">
-                <IonItem text-center>
-                  <IonText>Missing at: {report.dateTime}</IonText>
-                </IonItem>
-              </IonRow>
+                  <IonItem>
+                    <IonText>Age: {report.age}</IonText>
+                  </IonItem>
+                </IonRow>
+                <IonRow class="ion-justify-content-around">
+                  <IonItem>
+                    <IonText>Height: {report.height}</IonText>
+                  </IonItem>
 
-            </IonCard>
-          </IonCol>
-        // </Link>
+                  <IonItem>
+                    <IonText>Weight: {report.weight}</IonText>
+                  </IonItem>
+                </IonRow>
+                <IonRow class="ion-justify-content-around">
+                  <IonItem>
+                    <IonText>NationalID: {report.nationalID}</IonText>
+                  </IonItem>
+
+                  <IonItem>
+                    <IonText>Last Seen: {report.location}</IonText>
+                  </IonItem>
+                </IonRow>
+
+                <IonRow class="ion-justify-content-center">
+                  <IonItem text-center>
+                    <IonText>Missing at: {report.dateTime}</IonText>
+                  </IonItem>
+                </IonRow>
+
+              </IonCard>
+              </NavLink>
+
+            </IonCol>
+
+
         ))}
       </IonRow>
     </IonGrid>

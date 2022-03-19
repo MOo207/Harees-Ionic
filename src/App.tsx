@@ -1,5 +1,5 @@
 import '@aws-amplify/ui-react/styles.css';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, RouteComponentProps } from 'react-router-dom';
 import { IonApp, IonBadge, IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 
@@ -31,6 +31,7 @@ import { Authenticator } from '@aws-amplify/ui-react';
 import FAQS from './pages/Faqs';
 import About from './pages/About';
 import MainTabs from './pages/MainTabs';
+import ReportDetails from './pages/ReportDetails';
 
 Amplify.configure(awsconfig);
 // >>New - Configuring Auth Module
@@ -41,29 +42,35 @@ Storage.configure(awsconfig);
 
 setupIonicReact();
 
-const App: React.FC = () => (
-  <Authenticator initialState="signUp" signUpAttributes={["email"]} loginMechanisms={['email']}>
-    {({ signOut, user }) => (
-      <IonApp>
-        <IonReactRouter>
-          <IonReactRouter>
-            <Route exact path="/">
-              <Redirect to="/home" />
-            </Route>
-            <Route exact path="/home" >
-              <MainTabs />
-            </Route>
-            <Route exact path="/about" >
-              <About />
-            </Route>
-            <Route exact path="/faqs" >
-              <FAQS />
-            </Route>
-          </IonReactRouter>
-        </IonReactRouter>
-      </IonApp>
-    )}
-  </Authenticator>
-);
+const App: React.FC = () => {
+
+  return (
+    <Authenticator initialState="signUp" signUpAttributes={["email"]} loginMechanisms={['email']}>
+      {({ signOut, user }) => (
+       
+          <IonApp>
+            <IonReactRouter>
+              <IonReactRouter>
+                <Route exact path="/">
+                  <Redirect to="/home" />
+                </Route>
+                <Route exact path="/home" >
+                  <MainTabs />
+                </Route>
+                <Route exact path="/about" >
+                  <About />
+                </Route>
+                <Route exact path="/faqs" >
+                  <FAQS />
+                </Route>
+                <Route path="/details" component={ReportDetails}/> 
+
+              </IonReactRouter>
+            </IonReactRouter>
+          </IonApp>
+      )}
+    </Authenticator>
+  )
+};
 
 export default App;

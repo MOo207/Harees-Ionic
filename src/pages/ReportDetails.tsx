@@ -1,8 +1,14 @@
 import React from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel, IonButton, IonText, IonRow, IonCol, IonAvatar } from '@ionic/react';
+import { RouteComponentProps } from 'react-router';
+import { Report } from '../models';
 
+interface DetailsPageProps extends RouteComponentProps<{report: any}> {
 
-const ReportDetails: React.FC = () => {
+}
+
+const ReportDetails: React.FC<DetailsPageProps> = (prop) => {
+  const report = prop.history.location.state as Report;
     return (
         // Page
         <IonPage>
@@ -31,35 +37,35 @@ const ReportDetails: React.FC = () => {
 
               <IonRow class="ion-justify-content-around">
                 <IonItem>
-                  {/* <IonText>Name: {report.name}</IonText> */}
+                  <IonText>Name: {report.name}</IonText>
                 </IonItem>
 
                 <IonItem>
-                  {/* <IonText>Age: {report.age}</IonText> */}
+                  <IonText>Age: {report.age}</IonText>
                 </IonItem>
               </IonRow>
               <IonRow class="ion-justify-content-around">
                 <IonItem>
-                  {/* <IonText>Height: {report.height}</IonText> */}
+                  <IonText>Height: {report.height}</IonText>
                 </IonItem>
 
                 <IonItem>
-                  {/* <IonText>Weight: {report.weight}</IonText> */}
+                  <IonText>Weight: {report.weight}</IonText>
                 </IonItem>
               </IonRow>
               <IonRow class="ion-justify-content-around">
                 <IonItem>
-                  {/* <IonText>NationalID: {report.nationalID}</IonText> */}
+                  <IonText>NationalID: {report.nationalID}</IonText>
                 </IonItem>
 
                 <IonItem>
-                  {/* <IonText>Last Seen: {report.location}</IonText> */}
+                  <IonText>Last Seen: {report.location}</IonText>
                 </IonItem>
               </IonRow>
 
               <IonRow class="ion-justify-content-center">
                 <IonItem text-center>
-                  {/* <IonText>Missing at: {report.dateTime}</IonText> */}
+                  <IonText>Missing at: {report.dateTime}</IonText>
                 </IonItem>
               </IonRow>
 
