@@ -24,7 +24,7 @@
       "function": {
         "hareesappb61f05a7": {
           "deploymentBucketName": "amplify-hareesapp-dev-165343-deployment",
-          "s3Key": "amplify-builds/hareesappb61f05a7-33302b612b4450437443-build.zip"
+          "s3Key": "amplify-builds/hareesappb61f05a7-5868414b503771314162-build.zip"
         }
       }
     }

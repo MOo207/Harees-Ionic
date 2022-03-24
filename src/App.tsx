@@ -32,6 +32,7 @@ import FAQS from './pages/Faqs';
 import About from './pages/About';
 import MainTabs from './pages/MainTabs';
 import ReportDetails from './pages/ReportDetails';
+import { Fragment } from 'react';
 
 Amplify.configure(awsconfig);
 // >>New - Configuring Auth Module
@@ -39,11 +40,10 @@ Auth.configure(awsconfig);
 API.configure(awsconfig);
 Storage.configure(awsconfig);
 
-
 setupIonicReact();
 
 const App: React.FC = () => {
-
+  
   return (
     <Authenticator initialState="signUp" signUpAttributes={["email"]} loginMechanisms={['email']}>
       {({ signOut, user }) => (
@@ -54,6 +54,7 @@ const App: React.FC = () => {
                 <Route exact path="/">
                   <Redirect to="/home" />
                 </Route>
+                <Route exact path="/tab1" render={() => <Redirect to="/home" />} />
                 <Route exact path="/home" >
                   <MainTabs />
                 </Route>
@@ -63,7 +64,9 @@ const App: React.FC = () => {
                 <Route exact path="/faqs" >
                   <FAQS />
                 </Route>
-                <Route path="/details" component={ReportDetails}/> 
+
+                
+                
 
               </IonReactRouter>
             </IonReactRouter>

@@ -43,8 +43,8 @@ const axios = require("axios");
 
 app.post('/api/faceCompare', function (req, res) {
   const sourceImage = req.body.sourceImage;
+  const targetImage = req.body.targetImage;
   console.log(req.body);
-  console.log(sourceImage);
   axios
     .post('https://418q8jxfcf.execute-api.us-east-1.amazonaws.com/manual/faceCompare', {
       headers: {
@@ -53,7 +53,8 @@ app.post('/api/faceCompare', function (req, res) {
         "Access-Control-Allow-Headers": "*"
       },
       body: {
-        "sourceImage": sourceImage
+        "sourceImage": sourceImage,
+        "targetImage": targetImage
       }
     })
     .then((response) => {

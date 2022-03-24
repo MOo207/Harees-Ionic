@@ -7,6 +7,7 @@ import { Route, Redirect } from 'react-router';
 import AddReport from './AddReport';
 import Home from './Home';
 import Profile from './Profile';
+import ReportDetails from './ReportDetails';
 
 const MainTabs: React.FC = () => (
   <Authenticator initialState="signUp" signUpAttributes={["email"]} loginMechanisms={['email']}>
@@ -17,6 +18,7 @@ const MainTabs: React.FC = () => (
               <Route path="/tab1" component={Home} exact={true} />
               <Route path="/tab2" component={Profile} exact={true} />
               <Route path="/tab3" component={AddReport} />
+              <Route path="/details" component={ReportDetails}/>
               <Route path="/home" render={() => <Redirect to="/tab1" />} exact={true} />
               <Route path="/" render={() => <Redirect to="/tab1" />} exact={true} />
             </IonRouterOutlet>

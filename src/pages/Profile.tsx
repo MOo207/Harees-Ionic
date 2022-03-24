@@ -16,6 +16,20 @@ const Profile: React.FC = () => {
           console.log("Error", error);
         }
       }
+    const updateImage =async (reportID: string, image: string) => {
+        const original = await DataStore.query(Report, reportID);
+        const report: Report = original as Report;
+        try {
+
+            await DataStore.save(
+              Report.copyOf(report, updated => {
+                updated.image = image;
+              })
+            );
+        } catch (error) {
+          console.log("Error", error);
+        }
+      }
       
     return (
         // Page
@@ -96,6 +110,14 @@ const Profile: React.FC = () => {
                     "marginRight": "10px",
                     "marginBottom": "20px"
                 }} color="danger" onClick={deleteData}>delete</IonButton>
+                <IonButton expand="block" style={{
+                    "marginTop": "40px",
+                    "marginLeft": "10px",
+                    "marginRight": "10px",
+                    "marginBottom": "20px"
+                }} color="danger" onClick={()=>{
+                    updateImage("89b6ffdf-a042-41ee-ab31-9ff027fc2824", "e2000.jpg");
+                }}>Edit</IonButton>
             </IonContent>
         </IonPage>
     );

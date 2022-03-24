@@ -1,46 +1,52 @@
-export interface Faces {
-    FaceMatches:                      FaceMatch[];
-    SourceImageOrientationCorrection: string;
-    TargetImageOrientationCorrection: string;
-    UnmatchedFaces:                   Face[];
-    SourceImageFace:                  SourceImageFace;
+export interface FaceCompareResponse {
+    SourceImageFace: SourceImageFace;
+    FaceMatches:     FaceMatch[];
+    UnmatchedFaces:  FaceMatch[];
 }
 
 export interface FaceMatch {
-    Face:       Face;
     Similarity: number;
+    Face:       Face;
 }
 
 export interface Face {
     BoundingBox: BoundingBox;
     Confidence:  number;
+    Landmarks:   Landmark[];
     Pose:        Pose;
     Quality:     Quality;
-    Landmarks:   Landmark[];
 }
 
 export interface BoundingBox {
     Width:  number;
-    Top:    number;
-    Left:   number;
     Height: number;
+    Left:   number;
+    Top:    number;
 }
 
 export interface Landmark {
-    Y:    number;
+    Type: Type;
     X:    number;
-    Type: string;
+    Y:    number;
+}
+
+export enum Type {
+    EyeLeft = "eyeLeft",
+    EyeRight = "eyeRight",
+    MouthLeft = "mouthLeft",
+    MouthRight = "mouthRight",
+    Nose = "nose",
 }
 
 export interface Pose {
-    Yaw:   number;
     Roll:  number;
+    Yaw:   number;
     Pitch: number;
 }
 
 export interface Quality {
-    Sharpness:  number;
     Brightness: number;
+    Sharpness:  number;
 }
 
 export interface SourceImageFace {

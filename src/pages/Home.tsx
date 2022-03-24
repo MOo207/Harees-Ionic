@@ -1,68 +1,52 @@
 import { Authenticator } from '@aws-amplify/ui-react';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonIcon, IonGrid, IonRow, IonCol, IonImg, IonActionSheet, IonButton, IonBackButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonIcon, IonGrid, IonRow, IonCol, IonImg, IonActionSheet, IonButton, IonBackButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonAvatar, IonItem, IonText } from '@ionic/react';
 import { camera, trash, close, logOut } from 'ionicons/icons';
 import { usePhotoGallery, UserPhoto } from '../hooks/usePhotoGallery';
 
-import { Faces } from '../interfaces/faces';
 
-import { Storage, API } from 'aws-amplify';
-import ReportCards from '../components/ReportCards';
+import { Storage, API, DataStore } from 'aws-amplify';
 import axios from 'axios';
-import { RouteComponentProps } from 'react-router';
-import { report } from 'process';
+import { RouteComponentProps, useHistory } from 'react-router';
 import { Report } from '../models';
+import { NavLink } from 'react-router-dom';
 
 const Home: React.FC<RouteComponentProps> = (props) => {
-  const { deletePhoto, takePhoto } = usePhotoGallery();
-  const [photoToDelete, setPhotoToDelete] = useState<UserPhoto>();
+  const [reports, setReports] = useState<Report[]>();
 
 
-  const uploadS3 = async (object: any) => {
-    const result = await Storage.put("Image" + Date.now().toString() + ".jpeg", object);
-    return result;
-  };
+  const history = useHistory();
 
-  async function apiCall(sourceImage: any) {
-    const compareFaceResult = await API.post("hareesappapi", "/api/faceCompare", {
-      body: {
-        sourceImage: sourceImage,
+  const navigate = (report: Report) => {
+    history.push({
+      pathname: "/details",
+      state: {
+        report: report
       }
-    }).then(response => response).catch(error => console.log(error.response.data));
-    console.log(compareFaceResult);
-    return compareFaceResult;
-  }
+    });
+  };
 
-  const sendRequest = (s3Key: any) => {
-    return axios
-      .post('https://418q8jxfcf.execute-api.us-east-1.amazonaws.com/manual/faceCompare', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: {
-          sourceImage: s3Key
-        },
-      })
-      .then((response) => {
-        console.log(response);
-        return response.data as Faces;
-      })
+  useEffect(() => {
+    getReports().then(reports => {
+      setReports(reports);
+    });
+  }, []);
+
+
+  const getItemData = (report: any) => {
+    console.log(report);
   };
-  const sendReq = () => {
-    return axios
-      .post('https://418q8jxfcf.execute-api.us-east-1.amazonaws.com/manual/faceCompare', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: {
-          sourceImage: "Image1646659054522.jpeg"
-        },
-      })
-      .then((response) => {
-        console.log(response);
-        return response.data as Faces;
-      })
-  };
+
+  const getReports = async () => {
+    try {
+      var res = await DataStore.query(Report);
+      console.log("Posts retrieved successfully!", JSON.stringify(res, null, "\t"));
+      return res;
+    } catch (error) {
+      console.log("Error saving post", error);
+      return [];
+    }
+  }
 
   return (
 
@@ -79,45 +63,73 @@ const Home: React.FC<RouteComponentProps> = (props) => {
           </IonToolbar>
         </IonHeader>
 
-        <ReportCards/>
+        <IonGrid>
 
-
-        <IonFab vertical="bottom" horizontal="center" slot="fixed">
-          <IonFabButton onClick={async () => {
-          
-            // var image = await takePhoto();
-            // const imageBlob = await fetch(image?.webPath!);
-            // const blob = await imageBlob.blob();
-            // var s3Key = await uploadS3(blob);
-            // console.log(s3Key.key);
-            // const response: Faces = await sendRequest(s3Key.key);
-            // console.log(response);
-            // alert("Similarity: " + response.FaceMatches[0].Similarity);
-          }
-          }>
-            <IonIcon icon={camera}></IonIcon>
-          </IonFabButton>
-        </IonFab>
-
-        <IonActionSheet
-          isOpen={!!photoToDelete}
-          buttons={[{
-            text: 'Delete',
-            role: 'destructive',
-            icon: trash,
-            handler: () => {
-              if (photoToDelete) {
-                deletePhoto(photoToDelete);
-                setPhotoToDelete(undefined);
+          <IonRow>
+            {reports && reports.map((report, index) => (
+              <IonCol size="12" onClick={() => {
+                getItemData(report);
+                navigate(report);
               }
-            }
-          }, {
-            text: 'Cancel',
-            icon: close,
-            role: 'cancel'
-          }]}
-          onDidDismiss={() => setPhotoToDelete(undefined)}
-        />
+              } key={report.id}>
+
+                <IonCard>
+
+                  <IonItem>
+                    <IonAvatar style={{
+                      "height": "150px",
+                      "width": "150px",
+                      "margin": "auto",
+                      "marginTop": "10px",
+                      "marginBottom": "20px"
+                    }}>
+                      <img src={"https://harees-images.s3.amazonaws.com/public/" + report.image} />
+                    </IonAvatar>
+                  </IonItem>
+
+                  <IonRow class="ion-justify-content-around">
+                    <IonItem>
+                      <IonText>Name: {report.name}</IonText>
+                    </IonItem>
+
+                    <IonItem>
+                      <IonText>Age: {report.age}</IonText>
+                    </IonItem>
+                  </IonRow>
+                  <IonRow class="ion-justify-content-around">
+                    <IonItem>
+                      <IonText>Height: {report.height}</IonText>
+                    </IonItem>
+
+                    <IonItem>
+                      <IonText>Weight: {report.weight}</IonText>
+                    </IonItem>
+                  </IonRow>
+                  <IonRow class="ion-justify-content-around">
+                    <IonItem>
+                      <IonText>NationalID: {report.nationalID}</IonText>
+                    </IonItem>
+
+                    <IonItem>
+                      <IonText>Last Seen: {report.location}</IonText>
+                    </IonItem>
+                  </IonRow>
+
+                  <IonRow class="ion-justify-content-center">
+                    <IonItem text-center>
+                      <IonText>Missing at: {report.dateTime}</IonText>
+                    </IonItem>
+                  </IonRow>
+
+                </IonCard>
+
+              </IonCol>
+
+            ))}
+          </IonRow>
+        </IonGrid>
+
+        
 
       </IonContent>
 
