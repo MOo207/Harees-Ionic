@@ -5,6 +5,7 @@ export const onCreateReport = /* GraphQL */ `
   subscription OnCreateReport {
     onCreateReport {
       id
+      reportedBy
       image
       name
       age
@@ -25,6 +26,7 @@ export const onUpdateReport = /* GraphQL */ `
   subscription OnUpdateReport {
     onUpdateReport {
       id
+      reportedBy
       image
       name
       age
@@ -45,6 +47,7 @@ export const onDeleteReport = /* GraphQL */ `
   subscription OnDeleteReport {
     onDeleteReport {
       id
+      reportedBy
       image
       name
       age

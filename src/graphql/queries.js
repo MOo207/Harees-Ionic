@@ -5,6 +5,7 @@ export const getReport = /* GraphQL */ `
   query GetReport($id: ID!) {
     getReport(id: $id) {
       id
+      reportedBy
       image
       name
       age
@@ -30,6 +31,7 @@ export const listReports = /* GraphQL */ `
     listReports(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        reportedBy
         image
         name
         age
@@ -64,6 +66,7 @@ export const syncReports = /* GraphQL */ `
     ) {
       items {
         id
+        reportedBy
         image
         name
         age

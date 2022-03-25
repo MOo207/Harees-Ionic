@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonItem, IonIcon, IonText, IonRow, IonCol, IonAvatar, IonBackButton, IonButtons, IonActionSheet, IonFab, IonFabButton, useIonLoading } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonItem, IonIcon, IonText, IonRow, IonCol, IonAvatar, IonBackButton, IonButtons, IonActionSheet, IonFab, IonFabButton, useIonLoading, IonItemDivider, useIonToast, IonModal, IonButton } from '@ionic/react';
 import { RouteComponentProps } from 'react-router';
 import { Report } from '../models';
 import { usePhotoGallery, UserPhoto } from '../hooks/usePhotoGallery';
@@ -15,11 +15,13 @@ interface DetailsPageProps extends RouteComponentProps<{ report?: any }> {
 const ReportDetails: React.FC<DetailsPageProps> = ({ history }) => {
   const prop: any = history.location.state;
   const report = prop.report as Report;
-  const { deletePhoto, takePhoto } = usePhotoGallery();
+  const [presentToast, dismissToast] = useIonToast();
+  const { takePhoto } = usePhotoGallery();
   const [chosenImage, setChosenImage] = useState<any>();
-  const [photoToDelete, setPhotoToDelete] = useState<UserPhoto>();
+  
+  const [modal, setModal] = useState<boolean>();
   const [results, setResults] = useState<FaceCompareResponse>();
-  const [present, dismiss] = useIonLoading();
+  const [presentLoading, dismissLoading] = useIonLoading();
 
   const uploadS3 = async (object: any) => {
     const result = await Storage.put("Image" + Date.now().toString() + ".jpeg", object);
@@ -123,9 +125,11 @@ const ReportDetails: React.FC<DetailsPageProps> = ({ history }) => {
             </IonCard>
           </IonCol>
 
-
-          {results && results.FaceMatches.length != 0 && results.FaceMatches.map((face, index) => (
-            <IonCol size="12" key={index}>
+           {results && results.FaceMatches.length != 0 && results.FaceMatches.map((face, index) => (
+            <IonCol size="12" key={index} style={{
+              "marginBottom": "100px",
+              "marginTop": "0px"
+            }}>
               <IonCard>
                 <IonCardHeader>
                   <IonCardSubtitle>Surprise!, Missing Person's has matched</IonCardSubtitle>
@@ -155,17 +159,23 @@ const ReportDetails: React.FC<DetailsPageProps> = ({ history }) => {
                   </IonRow>
                 </IonCardContent>
                 <IonCardSubtitle>
-                  <IonItem>Similarity percentage: {face.Similarity}</IonItem>
+                  <IonItem style={{
+                    "marginBottom": "30px"
+                  }}>Similarity perc: {face.Similarity} %</IonItem>
                 </IonCardSubtitle>
               </IonCard>
             </IonCol>
+
           ))}
+
+         
+
 
           <IonFab vertical="bottom" horizontal="center" slot="fixed">
             <IonFabButton onClick={async () => {
 
               var image = await takePhoto();
-              present();
+              presentLoading();
               const imageBlob = await fetch(image?.webPath!);
               const blob = await imageBlob.blob();
               var s3Key = await uploadS3(blob);
@@ -174,29 +184,18 @@ const ReportDetails: React.FC<DetailsPageProps> = ({ history }) => {
               const response: FaceCompareResponse = await sendRequest(report.image, s3Key.key);
               setResults(response);
               console.log(response);
+              if (response.FaceMatches.length != 0) {
+                presentToast("We have found matches", 3000);
+              } else {
+                presentToast("No matches found", 3000);
+              }
               // alert("Similarity: " + response.FaceMatches);
-              dismiss();
+              dismissLoading();
+              
             }
             }>
-              <IonActionSheet
-                isOpen={!!photoToDelete}
-                buttons={[{
-                  text: 'Delete',
-                  role: 'destructive',
-                  icon: trash,
-                  handler: () => {
-                    if (photoToDelete) {
-                      deletePhoto(photoToDelete);
-                      setPhotoToDelete(undefined);
-                    }
-                  }
-                }, {
-                  text: 'Cancel',
-                  icon: close,
-                  role: 'cancel'
-                }]}
-                onDidDismiss={() => setPhotoToDelete(undefined)}
-              />
+
+
               <IonIcon icon={camera}></IonIcon>
             </IonFabButton>
           </IonFab>

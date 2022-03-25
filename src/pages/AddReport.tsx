@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonButton, IonInput, IonItemDivider, IonRow, IonList, IonAvatar, IonDatetime } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonButton, IonInput, IonItemDivider, IonRow, IonList, IonAvatar, IonDatetime, useIonToast } from '@ionic/react';
 import { DataStore } from '@aws-amplify/datastore';
 import { Storage } from 'aws-amplify';
 
 import { Report } from '../models';
 import { usePhotoGallery } from '../hooks/usePhotoGallery';
+import { useAuthenticator } from '@aws-amplify/ui-react';
 
 
 const AddReport: React.FC = () => {
-
+  const auth = useAuthenticator((context) => [context.user]);
+  const userID = auth.user?.attributes?.email;
+  const [present, dismiss] = useIonToast();
   const [image, setImage] = useState<string>();
   const [imageToUpload, setImageToUpload] = useState<Blob>();
   const [name, setName] = useState<string>();
@@ -23,6 +26,7 @@ const AddReport: React.FC = () => {
     try {
       var res = await DataStore.save(
         new Report({
+          reportedBy: userID as string,
           image: image,
           name: name,
           age: age,
@@ -56,7 +60,7 @@ const AddReport: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Add missing report</IonTitle>
+          <IonTitle>Add report</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -125,9 +129,10 @@ const AddReport: React.FC = () => {
           <IonButton expand='block' onClick={async () => {
             var s3Key = await uploadS3(imageToUpload);
             await addReport(name as string, age as number, NID as string, s3Key.key as string, height as number, weight as number, date as string, location as string);
+            present("Report added successfully", 3000);
           }}>Add</IonButton>
 
-          <IonButton expand='block' onClick={() => getReports()}>Get</IonButton>
+          {/* <IonButton expand='block' onClick={() => getReports()}>Get</IonButton> */}
         </IonList>
       </IonContent>
     </IonPage>

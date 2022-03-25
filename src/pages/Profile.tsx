@@ -16,14 +16,14 @@ const Profile: React.FC = () => {
           console.log("Error", error);
         }
       }
-    const updateImage =async (reportID: string, image: string) => {
-        const original = await DataStore.query(Report, reportID);
+    const updateReportedBy =async (reportId: string, reportedBy: string) => {
+        const original = await DataStore.query(Report, reportId);
         const report: Report = original as Report;
         try {
 
             await DataStore.save(
               Report.copyOf(report, updated => {
-                updated.image = image;
+                updated.reportedBy = reportedBy;
               })
             );
         } catch (error) {
@@ -56,15 +56,15 @@ const Profile: React.FC = () => {
                         <IonLabel>My Account</IonLabel>
                     </IonItem>
 
-                    <IonItem href="#">
+                    <IonItem href="/myReports">
                         <IonIcon icon={wine} slot="start" />
                         <IonLabel>My Reports</IonLabel>
                     </IonItem>
 
-                    <IonItem className="ion-activated">
+                    {/* <IonItem className="ion-activated">
                         <IonIcon icon={warning} slot="start" />
                         <IonLabel>My Kids</IonLabel>
-                    </IonItem>
+                    </IonItem> */}
 
                     <IonItem>
                         <IonIcon icon={walk} slot="start" />
@@ -104,6 +104,7 @@ const Profile: React.FC = () => {
                     "marginRight": "10px",
                     "marginBottom": "20px"
                 }} color="danger" onClick={signOut}>Logout</IonButton>
+            
             
             </IonContent>
         </IonPage>

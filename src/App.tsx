@@ -27,6 +27,7 @@ import { Authenticator } from '@aws-amplify/ui-react';
 import FAQS from './pages/Faqs';
 import About from './pages/About';
 import MainTabs from './pages/MainTabs';
+import MyReports from './pages/MyReports';
 
 Amplify.configure(awsconfig);
 // >>New - Configuring Auth Module
@@ -57,6 +58,9 @@ const App: React.FC = () => {
                 </Route>
                 <Route exact path="/faqs" >
                   <FAQS />
+                </Route>
+                <Route exact path="/myReports" >
+                  <MyReports />
                 </Route>
 
                 

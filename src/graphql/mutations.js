@@ -8,6 +8,7 @@ export const createReport = /* GraphQL */ `
   ) {
     createReport(input: $input, condition: $condition) {
       id
+      reportedBy
       image
       name
       age
@@ -31,6 +32,7 @@ export const updateReport = /* GraphQL */ `
   ) {
     updateReport(input: $input, condition: $condition) {
       id
+      reportedBy
       image
       name
       age
@@ -54,6 +56,7 @@ export const deleteReport = /* GraphQL */ `
   ) {
     deleteReport(input: $input, condition: $condition) {
       id
+      reportedBy
       image
       name
       age

@@ -1,13 +1,20 @@
-import React, {  useEffect, useState } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonAvatar, IonItem, IonText } from '@ionic/react';
+import React, { useEffect, useState } from 'react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonAvatar, IonItem, IonText, RefresherEventDetail, IonRefresher, IonRefresherContent } from '@ionic/react';
 
 import { DataStore } from 'aws-amplify';
 import { RouteComponentProps, useHistory } from 'react-router';
 import { Report } from '../models';
+import { chevronDownCircleOutline } from 'ionicons/icons';
 
 const Home: React.FC<RouteComponentProps> = (props) => {
   const [reports, setReports] = useState<Report[]>();
 
+  function doRefresh(event: CustomEvent<RefresherEventDetail>) {
+    getReports().then(reports => {
+      setReports(reports);
+    });
+    event.detail.complete();
+  }
 
   const history = useHistory();
 
@@ -47,86 +54,91 @@ const Home: React.FC<RouteComponentProps> = (props) => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Harees</IonTitle>
+          <IonTitle>Home</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
+        <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
+          <IonRefresherContent pullingIcon={chevronDownCircleOutline}
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+          </IonRefresherContent>
+        </IonRefresher>
+
         <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Photo Gallery</IonTitle>
-          </IonToolbar>
-        </IonHeader>
+              <IonToolbar>
+                <IonTitle size="large">Photo Gallery</IonTitle>
+              </IonToolbar>
+            </IonHeader>
+            <IonGrid>
 
-        <IonGrid>
+              <IonRow>
+                {reports && reports.map((report, index) => (
+                  <IonCol size="12" onClick={() => {
+                    getItemData(report);
+                    navigate(report);
+                  }
+                  } key={report.id}>
 
-          <IonRow>
-            {reports && reports.map((report, index) => (
-              <IonCol size="12" onClick={() => {
-                getItemData(report);
-                navigate(report);
-              }
-              } key={report.id}>
+                    <IonCard>
 
-                <IonCard>
+                      <IonItem>
+                        <IonAvatar style={{
+                          "height": "150px",
+                          "width": "150px",
+                          "margin": "auto",
+                          "marginTop": "40px",
+                          "marginBottom": "20px"
+                        }}>
+                          <img src={"https://harees-images.s3.amazonaws.com/public/" + report.image} />
+                        </IonAvatar>
+                      </IonItem>
 
-                  <IonItem>
-                    <IonAvatar style={{
-                      "height": "150px",
-                      "width": "150px",
-                      "margin": "auto",
-                      "marginTop": "10px",
-                      "marginBottom": "20px"
-                    }}>
-                      <img src={"https://harees-images.s3.amazonaws.com/public/" + report.image} />
-                    </IonAvatar>
-                  </IonItem>
+                      <IonRow class="ion-justify-content-around">
+                        <IonItem>
+                          <IonText>Name: {report.name}</IonText>
+                        </IonItem>
 
-                  <IonRow class="ion-justify-content-around">
-                    <IonItem>
-                      <IonText>Name: {report.name}</IonText>
-                    </IonItem>
+                        <IonItem>
+                          <IonText>Age: {report.age}</IonText>
+                        </IonItem>
+                      </IonRow>
+                      <IonRow class="ion-justify-content-around">
+                        <IonItem>
+                          <IonText>Height: {report.height}</IonText>
+                        </IonItem>
 
-                    <IonItem>
-                      <IonText>Age: {report.age}</IonText>
-                    </IonItem>
-                  </IonRow>
-                  <IonRow class="ion-justify-content-around">
-                    <IonItem>
-                      <IonText>Height: {report.height}</IonText>
-                    </IonItem>
+                        <IonItem>
+                          <IonText>Weight: {report.weight}</IonText>
+                        </IonItem>
+                      </IonRow>
+                      <IonRow class="ion-justify-content-around">
+                        <IonItem>
+                          <IonText>NationalID: {report.nationalID}</IonText>
+                        </IonItem>
 
-                    <IonItem>
-                      <IonText>Weight: {report.weight}</IonText>
-                    </IonItem>
-                  </IonRow>
-                  <IonRow class="ion-justify-content-around">
-                    <IonItem>
-                      <IonText>NationalID: {report.nationalID}</IonText>
-                    </IonItem>
+                        <IonItem>
+                          <IonText>Last Seen: {report.location}</IonText>
+                        </IonItem>
+                      </IonRow>
 
-                    <IonItem>
-                      <IonText>Last Seen: {report.location}</IonText>
-                    </IonItem>
-                  </IonRow>
+                      <IonRow class="ion-justify-content-center">
+                        <IonItem text-center>
+                          <IonText>Missing at: {report.dateTime}</IonText>
+                        </IonItem>
+                      </IonRow>
 
-                  <IonRow class="ion-justify-content-center">
-                    <IonItem text-center>
-                      <IonText>Missing at: {report.dateTime}</IonText>
-                    </IonItem>
-                  </IonRow>
+                    </IonCard>
 
-                </IonCard>
+                  </IonCol>
 
-              </IonCol>
+                ))}
+              </IonRow>
+            </IonGrid>
 
-            ))}
-          </IonRow>
-        </IonGrid>
-
-        
 
       </IonContent>
-
     </IonPage>
 
   );

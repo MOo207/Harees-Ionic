@@ -10,6 +10,7 @@ type ReportMetaData = {
 
 export declare class Report {
   readonly id: string;
+  readonly reportedBy: string;
   readonly image?: string;
   readonly name?: string;
   readonly age?: number;
