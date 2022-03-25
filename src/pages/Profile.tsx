@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel, IonButton, IonText, IonRow, IonCol } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonItem, IonIcon, IonLabel, IonButton, IonText, IonRow } from '@ionic/react';
 import { wifi, wine, warning, walk } from 'ionicons/icons';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { Report } from '../models';
@@ -104,20 +104,7 @@ const Profile: React.FC = () => {
                     "marginRight": "10px",
                     "marginBottom": "20px"
                 }} color="danger" onClick={signOut}>Logout</IonButton>
-                <IonButton expand="block" style={{
-                    "marginTop": "40px",
-                    "marginLeft": "10px",
-                    "marginRight": "10px",
-                    "marginBottom": "20px"
-                }} color="danger" onClick={deleteData}>delete</IonButton>
-                <IonButton expand="block" style={{
-                    "marginTop": "40px",
-                    "marginLeft": "10px",
-                    "marginRight": "10px",
-                    "marginBottom": "20px"
-                }} color="danger" onClick={()=>{
-                    updateImage("89b6ffdf-a042-41ee-ab31-9ff027fc2824", "e2000.jpg");
-                }}>Edit</IonButton>
+            
             </IonContent>
         </IonPage>
     );

@@ -1,6 +1,5 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel, IonButton, IonText, IonRow, IonCol, IonBackButton, IonButtons } from '@ionic/react';
-import { wifi, wine, warning, walk } from 'ionicons/icons';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonBackButton, IonButtons } from '@ionic/react';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 
 const About: React.FC = () => {
@@ -9,7 +8,7 @@ const About: React.FC = () => {
         // Page
         <IonPage>
             {/* Header */}
-            <IonHeader>
+            <IonHeader> 
             <IonToolbar>
                     <IonButtons slot="start">
                         <IonBackButton defaultHref="/home" />

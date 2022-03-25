@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonItem, IonIcon, IonLabel, IonButton, IonText, IonRow, IonCol, IonAvatar, IonBackButton, IonButtons, IonActionSheet, IonFab, IonFabButton, useIonLoading } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonItem, IonIcon, IonText, IonRow, IonCol, IonAvatar, IonBackButton, IonButtons, IonActionSheet, IonFab, IonFabButton, useIonLoading } from '@ionic/react';
 import { RouteComponentProps } from 'react-router';
 import { Report } from '../models';
 import { usePhotoGallery, UserPhoto } from '../hooks/usePhotoGallery';

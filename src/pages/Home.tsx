@@ -1,15 +1,9 @@
-import { Authenticator } from '@aws-amplify/ui-react';
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonIcon, IonGrid, IonRow, IonCol, IonImg, IonActionSheet, IonButton, IonBackButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonAvatar, IonItem, IonText } from '@ionic/react';
-import { camera, trash, close, logOut } from 'ionicons/icons';
-import { usePhotoGallery, UserPhoto } from '../hooks/usePhotoGallery';
+import React, {  useEffect, useState } from 'react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonAvatar, IonItem, IonText } from '@ionic/react';
 
-
-import { Storage, API, DataStore } from 'aws-amplify';
-import axios from 'axios';
+import { DataStore } from 'aws-amplify';
 import { RouteComponentProps, useHistory } from 'react-router';
 import { Report } from '../models';
-import { NavLink } from 'react-router-dom';
 
 const Home: React.FC<RouteComponentProps> = (props) => {
   const [reports, setReports] = useState<Report[]>();
