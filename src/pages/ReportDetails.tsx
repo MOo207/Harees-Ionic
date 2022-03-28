@@ -3,8 +3,8 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardH
 import { RouteComponentProps } from 'react-router';
 import { Report } from '../models';
 import { usePhotoGallery, UserPhoto } from '../hooks/usePhotoGallery';
-import { trash, close, camera } from 'ionicons/icons';
-import { API, Storage } from 'aws-amplify';
+import { camera } from 'ionicons/icons';
+import { Storage } from 'aws-amplify';
 import axios from 'axios';
 import { FaceCompareResponse } from '../interfaces/faces';
 
@@ -19,7 +19,6 @@ const ReportDetails: React.FC<DetailsPageProps> = ({ history }) => {
   const { takePhoto } = usePhotoGallery();
   const [chosenImage, setChosenImage] = useState<any>();
   
-  const [modal, setModal] = useState<boolean>();
   const [results, setResults] = useState<FaceCompareResponse>();
   const [presentLoading, dismissLoading] = useIonLoading();
 
@@ -27,17 +26,6 @@ const ReportDetails: React.FC<DetailsPageProps> = ({ history }) => {
     const result = await Storage.put("Image" + Date.now().toString() + ".jpeg", object);
     return result;
   };
-
-  async function apiCall(targetImage: any, sourceImage: any) {
-    const compareFaceResult = await API.post("hareesappapi", "/api/faceCompare", {
-      body: {
-        targetImage: targetImage,
-        sourceImage: sourceImage,
-      }
-    }).then(response => response).catch(error => console.log(error.response.data));
-    console.log(compareFaceResult);
-    return compareFaceResult;
-  }
 
   const sendRequest = (s3KeySI: any, s3KeyTI: any) => {
     return axios

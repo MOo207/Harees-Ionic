@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonAvatar, IonItem, IonText, RefresherEventDetail, IonRefresher, IonRefresherContent } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonAvatar, IonItem, IonText, RefresherEventDetail, IonRefresher, IonRefresherContent, IonSearchbar } from '@ionic/react';
 
 import { DataStore } from 'aws-amplify';
 import { RouteComponentProps, useHistory } from 'react-router';
 import { Report } from '../models';
 import { chevronDownCircleOutline } from 'ionicons/icons';
 
-const Home: React.FC<RouteComponentProps> = (props) => {
+const Home: React.FC<RouteComponentProps> = () => {
+  const [searchText, setSearchText] = useState('');
   const [reports, setReports] = useState<Report[]>();
 
   function doRefresh(event: CustomEvent<RefresherEventDetail>) {
@@ -48,6 +49,18 @@ const Home: React.FC<RouteComponentProps> = (props) => {
       return [];
     }
   }
+  const searchReport = async (searchText: string) => {
+    try {
+      var res = await DataStore.query(Report,  r => r.name("contains", searchText));
+      console.log("Posts retrieved successfully!", JSON.stringify(res, null, "\t"));
+      if (res.length > 0) {
+        setReports(res);
+      }
+    } catch (error) {
+      console.log("Error saving post", error);
+      return reports;
+    }
+  }
 
   return (
 
@@ -55,6 +68,11 @@ const Home: React.FC<RouteComponentProps> = (props) => {
       <IonHeader>
         <IonToolbar>
           <IonTitle>Home</IonTitle>
+          <IonSearchbar value={searchText} onIonChange={e => {
+            setSearchText(e.detail.value!);
+            searchReport(searchText);
+          }
+          } showCancelButton="focus"></IonSearchbar>
         </IonToolbar>
       </IonHeader>
       <IonContent>
