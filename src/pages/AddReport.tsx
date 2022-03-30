@@ -6,6 +6,8 @@ import { Storage } from 'aws-amplify';
 import { Report } from '../models';
 import { usePhotoGallery } from '../hooks/usePhotoGallery';
 import { useAuthenticator } from '@aws-amplify/ui-react';
+import axios from 'axios';
+import { FaceCompareResponse } from '../interfaces/faces';
 
 
 const AddReport: React.FC = () => {
@@ -43,6 +45,23 @@ const AddReport: React.FC = () => {
     }
   }
 
+  const sendRequest = (s3KeySI: any, s3KeyTI: any) => {
+    return axios
+      .post('https://418q8jxfcf.execute-api.us-east-1.amazonaws.com/manual/faceCompare', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: {
+          sourceImage: s3KeySI,
+          targetImage: s3KeyTI
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        return response.data as FaceCompareResponse;
+      })
+  };
+
   const uploadS3 = async (object: any) => {
     const result = await Storage.put("Image" + Date.now().toString() + ".jpeg", object);
     return result;
@@ -52,8 +71,10 @@ const AddReport: React.FC = () => {
     try {
       var res = await DataStore.query(Report);
       console.log("Posts retrieved successfully!", JSON.stringify(res, null, 2));
+      return res;
     } catch (error) {
       console.log("Error saving post", error);
+      return [];
     }
   }
   return (
@@ -127,9 +148,26 @@ const AddReport: React.FC = () => {
           </IonItem>
           <IonItemDivider></IonItemDivider>
           <IonButton expand='block' onClick={async () => {
-            var s3Key = await uploadS3(imageToUpload);
-            await addReport(name as string, age as number, NID as string, s3Key.key as string, height as number, weight as number, date as string, location as string);
-            present("Report added successfully", 3000);
+            if (image != undefined && name != undefined && age != undefined && NID != undefined && height != undefined && weight != undefined && date != undefined && location != undefined) {
+              var reports: Report[] = await getReports();
+              var s3Key = await uploadS3(imageToUpload);
+              var matched: boolean = false;
+              for (var i = 0; i < reports.length; i++) {
+                var res: FaceCompareResponse = await sendRequest(s3Key.key, reports[i].image);
+                if (res.FaceMatches.length > 0) {
+                  present("We find match", 3000);
+                  matched = true;
+                  break;
+                }
+              }
+              if (!matched) {
+                addReport(name, age, NID, s3Key.key, height, weight, date, location);
+                present("Report added successfully", 3000);
+              }
+            } else {
+              present("Please fill all the fields", 3000);
+            }
+
           }}>Add</IonButton>
 
           {/* <IonButton expand='block' onClick={() => getReports()}>Get</IonButton> */}
