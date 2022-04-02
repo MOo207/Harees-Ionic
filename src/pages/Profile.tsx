@@ -86,9 +86,9 @@ const Profile: React.FC = () => {
                         <IonLabel>FAQS</IonLabel>
                     </IonItem>
 
-                    <IonItem className="ion-activated"> 
+                    <IonItem href='/safety' className="ion-activated"> 
                         <IonIcon icon={wine} slot="start" />
-                        <IonLabel>Privacy & Policy</IonLabel>
+                        <IonLabel>Safety</IonLabel>
                     </IonItem>
 
                     <IonItem href="/about" className="ion-activated">
