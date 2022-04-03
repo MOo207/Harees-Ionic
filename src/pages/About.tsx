@@ -1,7 +1,6 @@
 import React from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonBackButton, IonButtons, IonCard, IonIcon, IonItem, IonLabel, IonTextarea } from '@ionic/react';
 import { useAuthenticator } from '@aws-amplify/ui-react';
-import { wifi, wine, walk } from 'ionicons/icons';
 
 const About: React.FC = () => {
     const { user, signOut } = useAuthenticator((context) => [context.user]);

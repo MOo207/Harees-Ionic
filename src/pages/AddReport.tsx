@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonButton, IonInput, IonItemDivider, IonRow, IonList, IonAvatar, IonDatetime, useIonToast } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonButton, IonInput, IonItemDivider, IonRow, IonList, IonAvatar, IonDatetime, useIonToast, useIonLoading } from '@ionic/react';
 import { DataStore } from '@aws-amplify/datastore';
 import { Storage } from 'aws-amplify';
 
@@ -14,6 +14,7 @@ const AddReport: React.FC = () => {
   const auth = useAuthenticator((context) => [context.user]);
   const userID = auth.user?.attributes?.email;
   const [present, dismiss] = useIonToast();
+  const [presentLoading, dismissLoading] = useIonLoading();
   const [image, setImage] = useState<string>();
   const [imageToUpload, setImageToUpload] = useState<Blob>();
   const [name, setName] = useState<string>();
@@ -24,6 +25,7 @@ const AddReport: React.FC = () => {
   const [date, setDate] = useState('2012-12-15T13:47:20.789');
   const [location, setLocation] = useState<string>();
   const { takePhoto } = usePhotoGallery();
+  // Datastore library from amplify to save data to the database
   const addReport = async (name: string, age: number, nationalID: string, image: string, height: number, weight: number, date: any, location: string) => {
     try {
       var res = await DataStore.save(
@@ -44,7 +46,8 @@ const AddReport: React.FC = () => {
       console.log("Error saving post", error);
     }
   }
-
+// this function interact with lambda to compare two faces and return the similarity score 
+// with parameters of the two faces source and target
   const sendRequest = (s3KeySI: any, s3KeyTI: any) => {
     return axios
       .post('https://418q8jxfcf.execute-api.us-east-1.amazonaws.com/manual/faceCompare', {
@@ -61,12 +64,13 @@ const AddReport: React.FC = () => {
         return response.data as FaceCompareResponse;
       })
   };
-
+// this function uploads the image to S3 bucket
   const uploadS3 = async (object: any) => {
     const result = await Storage.put("Image" + Date.now().toString() + ".jpeg", object);
     return result;
   };
 
+  // get all reports from 
   const getReports = async () => {
     try {
       var res = await DataStore.query(Report);
@@ -77,6 +81,7 @@ const AddReport: React.FC = () => {
       return [];
     }
   }
+
   return (
     <IonPage>
       <IonHeader>
@@ -148,6 +153,7 @@ const AddReport: React.FC = () => {
           </IonItem>
           <IonItemDivider></IonItemDivider>
           <IonButton expand='block' onClick={async () => {
+            presentLoading();
             if (image != undefined && name != undefined && age != undefined && NID != undefined && height != undefined && weight != undefined && date != undefined && location != undefined) {
               var reports: Report[] = await getReports();
               var s3Key = await uploadS3(imageToUpload);
@@ -155,7 +161,7 @@ const AddReport: React.FC = () => {
               for (var i = 0; i < reports.length; i++) {
                 var res: FaceCompareResponse = await sendRequest(s3Key.key, reports[i].image);
                 if (res.FaceMatches.length > 0) {
-                  present("We find match", 3000);
+                  present("The child has already been reported", 3000);
                   matched = true;
                   break;
                 }
@@ -167,7 +173,7 @@ const AddReport: React.FC = () => {
             } else {
               present("Please fill all the fields", 3000);
             }
-
+            dismissLoading();
           }}>Add</IonButton>
 
           {/* <IonButton expand='block' onClick={() => getReports()}>Get</IonButton> */}

@@ -8,10 +8,15 @@ type Report @model {
   image: String
   name: String
   age: Int
+  hairColor: String
+  eyeColor: String
+  skinColor: String
+  description: String
   nationalID: String
   height: Float
   weight: Float
   dateTime: String
-  location: String
+  lat: Float
+  lng: Float
 }
   

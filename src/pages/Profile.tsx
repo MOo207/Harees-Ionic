@@ -51,7 +51,7 @@ const Profile: React.FC = () => {
                 }}>Account Settings</IonText>
 
                 <IonCard>
-                    <IonItem href="#" className="ion-activated">
+                    <IonItem href="/myAccount" className="ion-activated">
                         <IonIcon icon={wifi} slot="start" />
                         <IonLabel>My Account</IonLabel>
                     </IonItem>

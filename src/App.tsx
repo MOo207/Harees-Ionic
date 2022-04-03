@@ -29,6 +29,7 @@ import About from './pages/About';
 import MainTabs from './pages/MainTabs';
 import MyReports from './pages/MyReports';
 import Safety from './pages/Safety';
+import MyAccount from './pages/MyAccount';
 
 Amplify.configure(awsconfig);
 // >>New - Configuring Auth Module
@@ -65,6 +66,9 @@ const App: React.FC = () => {
                 </Route>
                 <Route exact path="/safety" >
                   <Safety />
+                </Route>
+                <Route exact path="/myAccount" >
+                  <MyAccount />
                 </Route>
 
                 
