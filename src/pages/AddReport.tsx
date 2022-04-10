@@ -8,6 +8,7 @@ import { usePhotoGallery } from '../hooks/usePhotoGallery';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import axios from 'axios';
 import { FaceCompareResponse } from '../interfaces/faces';
+import MyMap from './Map';
 
 
 const AddReport: React.FC = () => {
@@ -38,7 +39,6 @@ const AddReport: React.FC = () => {
           height: height,
           weight: weight,
           dateTime: date,
-          location: location,
         })
       );
       console.log(res);
@@ -46,8 +46,8 @@ const AddReport: React.FC = () => {
       console.log("Error saving post", error);
     }
   }
-// this function interact with lambda to compare two faces and return the similarity score 
-// with parameters of the two faces source and target
+  // this function interact with lambda to compare two faces and return the similarity score 
+  // with parameters of the two faces source and target
   const sendRequest = (s3KeySI: any, s3KeyTI: any) => {
     return axios
       .post('https://418q8jxfcf.execute-api.us-east-1.amazonaws.com/manual/faceCompare', {
@@ -64,7 +64,7 @@ const AddReport: React.FC = () => {
         return response.data as FaceCompareResponse;
       })
   };
-// this function uploads the image to S3 bucket
+  // this function uploads the image to S3 bucket
   const uploadS3 = async (object: any) => {
     const result = await Storage.put("Image" + Date.now().toString() + ".jpeg", object);
     return result;
@@ -148,9 +148,7 @@ const AddReport: React.FC = () => {
             <IonDatetime value={date} placeholder="DateTime" onIonChange={e => setDate(e.detail.value!)}></IonDatetime>
           </IonItem>
           <IonItemDivider></IonItemDivider>
-          <IonItem>
-            <IonInput value={location} placeholder="Location" onIonChange={e => setLocation(e.detail.value!)}></IonInput>
-          </IonItem>
+            <MyMap />
           <IonItemDivider></IonItemDivider>
           <IonButton expand='block' onClick={async () => {
             presentLoading();
