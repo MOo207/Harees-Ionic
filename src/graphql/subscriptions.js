@@ -9,11 +9,16 @@ export const onCreateReport = /* GraphQL */ `
       image
       name
       age
+      hairColor
+      eyeColor
+      skinColor
+      description
       nationalID
       height
       weight
       dateTime
-      location
+      lat
+      lng
       createdAt
       updatedAt
       _version
@@ -30,11 +35,16 @@ export const onUpdateReport = /* GraphQL */ `
       image
       name
       age
+      hairColor
+      eyeColor
+      skinColor
+      description
       nationalID
       height
       weight
       dateTime
-      location
+      lat
+      lng
       createdAt
       updatedAt
       _version
@@ -51,11 +61,16 @@ export const onDeleteReport = /* GraphQL */ `
       image
       name
       age
+      hairColor
+      eyeColor
+      skinColor
+      description
       nationalID
       height
       weight
       dateTime
-      location
+      lat
+      lng
       createdAt
       updatedAt
       _version

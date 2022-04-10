@@ -38,6 +38,34 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "hairColor": {
+                    "name": "hairColor",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "eyeColor": {
+                    "name": "eyeColor",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "skinColor": {
+                    "name": "skinColor",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "description": {
+                    "name": "description",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "nationalID": {
                     "name": "nationalID",
                     "isArray": false,
@@ -66,10 +94,17 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "location": {
-                    "name": "location",
+                "lat": {
+                    "name": "lat",
                     "isArray": false,
-                    "type": "String",
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "lng": {
+                    "name": "lng",
+                    "isArray": false,
+                    "type": "Float",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -102,5 +137,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "1e78ce1e647ae3131c7b49bc9b4a6e97"
+    "version": "399db9c80a695b750c1ce2362cbd8f4a"
 };

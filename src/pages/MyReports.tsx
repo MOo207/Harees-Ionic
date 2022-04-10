@@ -7,6 +7,7 @@ import { Report } from '../models';
 import { chevronDownCircleOutline } from 'ionicons/icons';
 import { queries } from '@testing-library/react';
 import { Card, useAuthenticator } from '@aws-amplify/ui-react';
+import MyMap from './Map';
 
 const MyReports: React.FC = () => {
     const auth = useAuthenticator((context) => [context.user]);
@@ -125,13 +126,10 @@ const MyReports: React.FC = () => {
                                         <IonItem>
                                             <IonText>NationalID: {report.nationalID}</IonText>
                                         </IonItem>
-
-                                        <IonItem>
-                                            <IonText>Last Seen: {report.location}</IonText>
-                                        </IonItem>
                                     </IonRow>
 
                                     <IonRow class="ion-justify-content-center">
+         
                                         <IonItem text-center>
                                             <IonText>Missing at: {report.dateTime}</IonText>
                                         </IonItem>

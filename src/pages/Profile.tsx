@@ -66,7 +66,7 @@ const Profile: React.FC = () => {
                         <IonLabel>My Kids</IonLabel>
                     </IonItem> */}
 
-                    <IonItem>
+                    <IonItem href='/myMap'>
                         <IonIcon icon={walk} slot="start" />
                         <IonLabel>Change Password</IonLabel>
                     </IonItem>

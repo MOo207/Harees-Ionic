@@ -14,11 +14,16 @@ export declare class Report {
   readonly image?: string;
   readonly name?: string;
   readonly age?: number;
+  readonly hairColor?: string;
+  readonly eyeColor?: string;
+  readonly skinColor?: string;
+  readonly description?: string;
   readonly nationalID?: string;
   readonly height?: number;
   readonly weight?: number;
   readonly dateTime?: string;
-  readonly location?: string;
+  readonly lat?: number;
+  readonly lng?: number;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Report, ReportMetaData>);

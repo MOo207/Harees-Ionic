@@ -136,9 +136,9 @@ const Home: React.FC<RouteComponentProps> = () => {
                           <IonText>NationalID: {report.nationalID}</IonText>
                         </IonItem>
 
-                        <IonItem>
+                        {/* <IonItem>
                           <IonText>Last Seen: {report.location}</IonText>
-                        </IonItem>
+                        </IonItem> */}
                       </IonRow>
 
                       <IonRow class="ion-justify-content-center">
