@@ -7,10 +7,12 @@ import { camera } from 'ionicons/icons';
 import { Storage } from 'aws-amplify';
 import axios from 'axios';
 import { FaceCompareResponse } from '../interfaces/faces';
+import GetMapLocation from '../components/GetMapLocation';
 
 interface DetailsPageProps extends RouteComponentProps<{ report?: any }> {
 
 }
+
 
 const ReportDetails: React.FC<DetailsPageProps> = ({ history }) => {
   const prop: any = history.location.state;
@@ -108,6 +110,10 @@ const ReportDetails: React.FC<DetailsPageProps> = ({ history }) => {
                 <IonItem text-center>
                   <IonText>Missing at: {report.dateTime}</IonText>
                 </IonItem>
+              </IonRow>
+
+              <IonRow class="ion-justify-content-center">
+              <GetMapLocation lat={report.lat!} lng={report.lng! }/>
               </IonRow>
 
             </IonCard>

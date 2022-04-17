@@ -30,7 +30,7 @@ import MainTabs from './pages/MainTabs';
 import MyReports from './pages/MyReports';
 import Safety from './pages/Safety';
 import MyAccount from './pages/MyAccount';
-import MyMap from './pages/Map';
+import MyMap from './components/SetMapLocation';
 
 Amplify.configure(awsconfig);
 // >>New - Configuring Auth Module
@@ -71,9 +71,9 @@ const App: React.FC = () => {
                 <Route exact path="/myAccount" >
                   <MyAccount />
                 </Route>
-                <Route exact path="/myMap" >
+                {/* <Route exact path="/myMap" >
                   <MyMap />
-                </Route>
+                </Route> */}
 
               </IonReactRouter>
             </IonReactRouter>

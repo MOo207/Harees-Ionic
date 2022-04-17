@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonButton, IonInput, IonItemDivider, IonRow, IonList, IonAvatar, IonDatetime, useIonToast, useIonLoading } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonButton, IonInput, IonItemDivider, IonRow, IonList, IonAvatar, IonDatetime, useIonToast, useIonLoading, IonLabel } from '@ionic/react';
 import { DataStore } from '@aws-amplify/datastore';
 import { Storage } from 'aws-amplify';
 
@@ -8,10 +8,11 @@ import { usePhotoGallery } from '../hooks/usePhotoGallery';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import axios from 'axios';
 import { FaceCompareResponse } from '../interfaces/faces';
-import MyMap from './Map';
+import SetMapLocation from '../components/SetMapLocation';
 
 
 const AddReport: React.FC = () => {
+  const UserContext = React.createContext("");
   const auth = useAuthenticator((context) => [context.user]);
   const userID = auth.user?.attributes?.email;
   const [present, dismiss] = useIonToast();
@@ -23,11 +24,12 @@ const AddReport: React.FC = () => {
   const [NID, setNID] = useState<string>();
   const [height, setHeight] = useState<number>();
   const [weight, setWeight] = useState<number>();
+  const [lat, setLat] = useState<number>();
+  const [lng, setLng] = useState<number>();
   const [date, setDate] = useState('2012-12-15T13:47:20.789');
-  const [location, setLocation] = useState<string>();
   const { takePhoto } = usePhotoGallery();
   // Datastore library from amplify to save data to the database
-  const addReport = async (name: string, age: number, nationalID: string, image: string, height: number, weight: number, date: any, location: string) => {
+  const addReport = async (name: string, age: number, nationalID: string, image: string, height: number, weight: number, date: any, lat: number, lng: number) => {
     try {
       var res = await DataStore.save(
         new Report({
@@ -39,6 +41,8 @@ const AddReport: React.FC = () => {
           height: height,
           weight: weight,
           dateTime: date,
+          lat: lat,
+          lng: lng,
         })
       );
       console.log(res);
@@ -82,6 +86,12 @@ const AddReport: React.FC = () => {
     }
   }
 
+  const updateParent = async (lat: number, lng: number) => {
+    console.log(lat);
+    setLat(lat);
+    setLng(lng);
+  }
+
   return (
     <IonPage>
       <IonHeader>
@@ -122,52 +132,58 @@ const AddReport: React.FC = () => {
             <IonInput type='text' value={name} placeholder="Name" onIonChange={e => setName(e.detail.value!)}></IonInput>
           </IonItem>
 
-          <IonItemDivider></IonItemDivider>
+           
 
           <IonItem>
             <IonInput value={age} placeholder="Age" onIonChange={e => setAge(Number(e.detail.value!))}></IonInput>
           </IonItem>
-          <IonItemDivider></IonItemDivider>
+           
 
           <IonItem>
             <IonInput type='tel' value={NID} placeholder="National ID" onIonChange={e => setNID(e.detail.value!)}></IonInput>
           </IonItem>
-          <IonItemDivider></IonItemDivider>
+           
 
           <IonItem>
             <IonInput type='tel' value={height} placeholder="Height" onIonChange={e => setHeight(Number(e.detail.value!))}></IonInput>
           </IonItem>
-          <IonItemDivider></IonItemDivider>
+           
 
           <IonItem>
             <IonInput value={weight} placeholder="Weight" onIonChange={e => setWeight(Number(e.detail.value!))}></IonInput>
           </IonItem>
-          <IonItemDivider></IonItemDivider>
+           
+           <IonRow style={{
+             "marginTop": "20px",
+             "marginBottom": "120px"
+           }} >
+            <SetMapLocation updateParent={updateParent} />
+           </IonRow>
+
 
           <IonItem>
             <IonDatetime value={date} placeholder="DateTime" onIonChange={e => setDate(e.detail.value!)}></IonDatetime>
           </IonItem>
-          <IonItemDivider></IonItemDivider>
-            <MyMap />
-          <IonItemDivider></IonItemDivider>
+           
+           
           <IonButton expand='block' onClick={async () => {
             presentLoading();
-            if (image != undefined && name != undefined && age != undefined && NID != undefined && height != undefined && weight != undefined && date != undefined && location != undefined) {
-              var reports: Report[] = await getReports();
+            if (image != undefined && name != undefined && age != undefined && NID != undefined && height != undefined && weight != undefined && date != undefined && lat != undefined && lng != undefined) {
+              // var reports: Report[] = await getReports();
               var s3Key = await uploadS3(imageToUpload);
-              var matched: boolean = false;
-              for (var i = 0; i < reports.length; i++) {
-                var res: FaceCompareResponse = await sendRequest(s3Key.key, reports[i].image);
-                if (res.FaceMatches.length > 0) {
-                  present("The child has already been reported", 3000);
-                  matched = true;
-                  break;
-                }
-              }
-              if (!matched) {
-                addReport(name, age, NID, s3Key.key, height, weight, date, location);
+              // var matched: boolean = false;
+              // for (var i = 0; i < reports.length; i++) {
+              //   var res: FaceCompareResponse = await sendRequest(s3Key.key, reports[i].image);
+              //   if (res.FaceMatches.length > 0) {
+              //     present("The child has already been reported", 3000);
+              //     matched = true;
+              //     break;
+              //   }
+              // }
+              // if (!matched) {
+                addReport(name, age, NID, s3Key.key, height, weight, date, lat!, lng!);
                 present("Report added successfully", 3000);
-              }
+              // }
             } else {
               present("Please fill all the fields", 3000);
             }

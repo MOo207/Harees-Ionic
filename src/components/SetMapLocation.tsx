@@ -25,7 +25,7 @@ const render = (status: Status) => {
   return <h1>{status}</h1>;
 };
 
-const MyMap: React.VFC = () => {
+const SetMapLocation: React.VFC<{ updateParent: (lat: number, lng: number) => Promise<void>; }> = (props) => {
   const [click, setClicks] = React.useState<google.maps.LatLng>();
   const [zoom, setZoom] = React.useState(3); // initial zoom
   const [center, setCenter] = React.useState<google.maps.LatLngLiteral>({
@@ -36,6 +36,7 @@ const MyMap: React.VFC = () => {
   const onClick = (e: google.maps.MapMouseEvent) => {
     // avoid directly mutating state
     setClicks(e.latLng!);
+    props.updateParent(e.latLng!.lat(), e.latLng!.lng());
   };
 
   const onIdle = (m: google.maps.Map) => {
@@ -56,48 +57,30 @@ const MyMap: React.VFC = () => {
   );
 
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-        <IonButtons slot="start">
-          <IonBackButton defaultHref="/home" />
-        </IonButtons>
-          <IonTitle>Map</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
-        <IonCol >
-          <Wrapper apiKey={"AIzaSyBWgCswaRvMWpNWnYD2SDEbqxJ1TbxpYz0"} render={render}>
-            <Map
-              center={center}
-              onClick={onClick}
-              onIdle={onIdle}
-              zoom={zoom}
-              style={{ flexGrow: "1", height: "80%" }}
-            >
-              <Marker position={click} />
-            </Map>
-          </Wrapper>
-          {/* Basic form for controlling center and zoom of map. */}
-          {form}
-        </IonCol>
-
-      </IonContent>
-    </IonPage>
-
-
+      <IonCol >
+        <Wrapper apiKey={"AIzaSyBWgCswaRvMWpNWnYD2SDEbqxJ1TbxpYz0"} render={render}>
+          <Map
+            center={center}
+            onClick={onClick}
+            zoom={zoom}
+            style={{ flexGrow: "1", height: "80%" }}
+          >
+            <Marker position={click} />
+          </Map>
+        </Wrapper>
+        {/* Basic form for controlling center and zoom of map. */}
+        {form}
+      </IonCol>
   );
 };
 
 interface MapProps extends google.maps.MapOptions {
   style: { [key: string]: string };
   onClick?: (e: google.maps.MapMouseEvent) => void;
-  onIdle?: (map: google.maps.Map) => void;
 }
 
 const Map: React.FC<MapProps> = ({
   onClick,
-  onIdle,
   children,
   style,
   ...options
@@ -129,11 +112,9 @@ const Map: React.FC<MapProps> = ({
         map.addListener("click", onClick);
       }
 
-      if (onIdle) {
-        map.addListener("idle", () => onIdle(map));
-      }
+     
     }
-  }, [map, onClick, onIdle]);
+  }, [map, onClick]);
 
   return (
     <>
@@ -208,4 +189,4 @@ function useDeepCompareEffectForMaps(
   React.useEffect(callback, dependencies.map(useDeepCompareMemoize));
 }
 
-export default MyMap;
+export default SetMapLocation;

@@ -7,7 +7,7 @@ import { Report } from '../models';
 import { chevronDownCircleOutline } from 'ionicons/icons';
 import { queries } from '@testing-library/react';
 import { Card, useAuthenticator } from '@aws-amplify/ui-react';
-import MyMap from './Map';
+import MyMap from '../components/SetMapLocation';
 
 const MyReports: React.FC = () => {
     const auth = useAuthenticator((context) => [context.user]);

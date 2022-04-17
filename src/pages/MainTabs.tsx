@@ -17,6 +17,7 @@ const MainTabs: React.FC = () => (
             <IonRouterOutlet>
               <Route path="/tab1" component={Home} exact={true} />
               <Route path="/tab2" component={Profile} exact={true} />
+              
               <Route path="/tab3" component={AddReport} />
               <Route path="/details" component={ReportDetails}/>
               <Route path="/home" render={() => <Redirect to="/tab1" />} exact={true} />

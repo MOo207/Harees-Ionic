@@ -66,10 +66,10 @@ const Profile: React.FC = () => {
                         <IonLabel>My Kids</IonLabel>
                     </IonItem> */}
 
-                    <IonItem href='/myMap'>
+                    {/* <IonItem href='/myMap'>
                         <IonIcon icon={walk} slot="start" />
                         <IonLabel>Change Password</IonLabel>
-                    </IonItem>
+                    </IonItem> */}
                 </IonCard>
 
                 <IonRow style={{ height: 20 }}></IonRow>
