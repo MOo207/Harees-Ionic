@@ -9,10 +9,9 @@ export const getReport = /* GraphQL */ `
       image
       name
       age
-      hairColor
-      eyeColor
-      skinColor
+      gender
       description
+      healthStatus
       nationalID
       height
       weight
@@ -40,10 +39,9 @@ export const listReports = /* GraphQL */ `
         image
         name
         age
-        hairColor
-        eyeColor
-        skinColor
+        gender
         description
+        healthStatus
         nationalID
         height
         weight
@@ -80,10 +78,9 @@ export const syncReports = /* GraphQL */ `
         image
         name
         age
-        hairColor
-        eyeColor
-        skinColor
+        gender
         description
+        healthStatus
         nationalID
         height
         weight

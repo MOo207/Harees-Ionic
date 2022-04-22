@@ -8,9 +8,31 @@ import AddReport from './AddReport';
 import Home from './Home';
 import Profile from './Profile';
 import ReportDetails from './ReportDetails';
+const formFields = {
+  signUp: {
+    email: {
+      order:1
+    },
+    family_name: {
+      order: 2
+    },
+    preferred_username: {
+      order: 4
+    },
+    birthdate: {
+      order: 3
+    },
+    password: {
+      order: 5
+    },
+    confirm_password: {
+      order: 6
+    }
+  },
+ }
 
 const MainTabs: React.FC = () => (
-  <Authenticator initialState="signUp" signUpAttributes={["email"]} loginMechanisms={['email']}>
+  <Authenticator>
     {({ signOut, user }) => (
         <IonReactRouter>
           <IonTabs>

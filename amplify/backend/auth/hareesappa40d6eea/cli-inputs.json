@@ -1,10 +1,10 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "hareesapp01c7e63e_identitypool_01c7e63e",
+    "identityPoolName": "hareesappa40d6eea_identitypool_a40d6eea",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "harees01c7e63e",
-    "userPoolName": "hareesapp01c7e63e_userpool_01c7e63e",
+    "resourceNameTruncated": "hareesa40d6eea",
+    "userPoolName": "hareesappa40d6eea_userpool_a40d6eea",
     "autoVerifiedAttributes": [
       "email"
     ],
@@ -20,7 +20,10 @@
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
-      "email"
+      "birthdate",
+      "email",
+      "family_name",
+      "name"
     ],
     "aliasAttributes": [],
     "userpoolClientGenerateSecret": false,
@@ -31,10 +34,10 @@
     "userpoolClientReadAttributes": [
       "email"
     ],
-    "userpoolClientLambdaRole": "harees01c7e63e_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "hareesa40d6eea_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "01c7e63e",
-    "resourceName": "hareesapp01c7e63e",
+    "sharedId": "a40d6eea",
+    "resourceName": "hareesappa40d6eea",
     "authSelections": "identityPoolAndUserPool",
     "useDefault": "default",
     "usernameAttributes": [

@@ -14,10 +14,9 @@ export declare class Report {
   readonly image?: string;
   readonly name?: string;
   readonly age?: number;
-  readonly hairColor?: string;
-  readonly eyeColor?: string;
-  readonly skinColor?: string;
+  readonly gender?: string;
   readonly description?: string;
+  readonly healthStatus?: string;
   readonly nationalID?: string;
   readonly height?: number;
   readonly weight?: number;

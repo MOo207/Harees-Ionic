@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonButton, IonInput, IonItemDivider, IonRow, IonList, IonAvatar, IonDatetime, useIonToast, useIonLoading, IonLabel } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonButton, IonInput, IonItemDivider, IonRow, IonList, IonAvatar, IonDatetime, useIonToast, useIonLoading, IonLabel, IonTextarea, IonSelect, IonSelectOption } from '@ionic/react';
 import { DataStore } from '@aws-amplify/datastore';
 import { Storage } from 'aws-amplify';
 
@@ -22,14 +22,17 @@ const AddReport: React.FC = () => {
   const [name, setName] = useState<string>();
   const [age, setAge] = useState<number>();
   const [NID, setNID] = useState<string>();
+  const [description, setDescription] = useState<string>();
+  const [healthStatus, setHealthStatus] = useState<string>();
   const [height, setHeight] = useState<number>();
   const [weight, setWeight] = useState<number>();
+  const [gender, setGender] = useState<string>();
   const [lat, setLat] = useState<number>();
   const [lng, setLng] = useState<number>();
   const [date, setDate] = useState('2012-12-15T13:47:20.789');
   const { takePhoto } = usePhotoGallery();
   // Datastore library from amplify to save data to the database
-  const addReport = async (name: string, age: number, nationalID: string, image: string, height: number, weight: number, date: any, lat: number, lng: number) => {
+  const addReport = async (name: string, age: number, nationalID: string, description: string, healthStatus: string, image: string, height: number, weight: number, gender: string, date: any, lat: number, lng: number) => {
     try {
       var res = await DataStore.save(
         new Report({
@@ -38,8 +41,11 @@ const AddReport: React.FC = () => {
           name: name,
           age: age,
           nationalID: nationalID,
+          description: description,
+          healthStatus: healthStatus,
           height: height,
           weight: weight,
+          gender: gender,
           dateTime: date,
           lat: lat,
           lng: lng,
@@ -152,7 +158,24 @@ const AddReport: React.FC = () => {
           <IonItem>
             <IonInput value={weight} placeholder="Weight" onIonChange={e => setWeight(Number(e.detail.value!))}></IonInput>
           </IonItem>
+
+          <IonItem>
+            <IonLabel>Gender</IonLabel>
+            <IonSelect value={gender} placeholder="Select One" onIonChange={e => setGender(e.detail.value)}>
+              <IonSelectOption value="female">Female</IonSelectOption>
+              <IonSelectOption value="male">Male</IonSelectOption>
+            </IonSelect>
+          </IonItem>
            
+                   
+          <IonItem>
+          <IonTextarea value={description} placeholder="Description" onIonChange={e => setDescription(e.detail.value!)}></IonTextarea>
+          </IonItem>
+          <IonItem>
+          <IonTextarea value={healthStatus} placeholder="Health Status" onIonChange={e => setHealthStatus(e.detail.value!)}></IonTextarea>
+          </IonItem>
+           
+
            <IonRow style={{
              "marginTop": "20px",
              "marginBottom": "120px"
@@ -164,7 +187,7 @@ const AddReport: React.FC = () => {
           <IonItem>
             <IonDatetime value={date} placeholder="DateTime" onIonChange={e => setDate(e.detail.value!)}></IonDatetime>
           </IonItem>
-           
+  
            
           <IonButton expand='block' onClick={async () => {
             presentLoading();
@@ -181,7 +204,7 @@ const AddReport: React.FC = () => {
               //   }
               // }
               // if (!matched) {
-                addReport(name, age, NID, s3Key.key, height, weight, date, lat!, lng!);
+                addReport(name, age, NID, description!, healthStatus!, s3Key.key, height, weight, gender!, date, lat!, lng!);
                 present("Report added successfully", 3000);
               // }
             } else {

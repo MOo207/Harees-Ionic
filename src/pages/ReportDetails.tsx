@@ -86,6 +86,9 @@ const ReportDetails: React.FC<DetailsPageProps> = ({ history }) => {
                 <IonItem>
                   <IonText>Age: {report.age}</IonText>
                 </IonItem>
+                <IonItem>
+                  <IonText>Gender: {report.gender}</IonText>
+                </IonItem>
               </IonRow>
               <IonRow class="ion-justify-content-around">
                 <IonItem>
@@ -99,6 +102,12 @@ const ReportDetails: React.FC<DetailsPageProps> = ({ history }) => {
               <IonRow class="ion-justify-content-around">
                 <IonItem>
                   <IonText>NationalID: {report.nationalID}</IonText>
+                </IonItem>
+                <IonItem>
+                  <IonText>Description: {report.description}</IonText>
+                </IonItem>
+                <IonItem>
+                  <IonText>Health Status: {report.healthStatus}</IonText>
                 </IonItem>
 
                 {/* <IonItem>

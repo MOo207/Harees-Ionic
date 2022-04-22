@@ -1,6 +1,6 @@
 {
   "auth": {
-    "hareesapp01c7e63e": {
+    "hareesappa40d6eea": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -11,7 +11,10 @@
           "EMAIL"
         ],
         "signupAttributes": [
-          "EMAIL"
+          "BIRTHDATE",
+          "EMAIL",
+          "FAMILY_NAME",
+          "NAME"
         ],
         "passwordProtectionSettings": {
           "passwordPolicyMinLength": 8,

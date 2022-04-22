@@ -9,10 +9,9 @@ export const onCreateReport = /* GraphQL */ `
       image
       name
       age
-      hairColor
-      eyeColor
-      skinColor
+      gender
       description
+      healthStatus
       nationalID
       height
       weight
@@ -35,10 +34,9 @@ export const onUpdateReport = /* GraphQL */ `
       image
       name
       age
-      hairColor
-      eyeColor
-      skinColor
+      gender
       description
+      healthStatus
       nationalID
       height
       weight
@@ -61,10 +59,9 @@ export const onDeleteReport = /* GraphQL */ `
       image
       name
       age
-      hairColor
-      eyeColor
-      skinColor
+      gender
       description
+      healthStatus
       nationalID
       height
       weight

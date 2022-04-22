@@ -38,22 +38,8 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "hairColor": {
-                    "name": "hairColor",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "eyeColor": {
-                    "name": "eyeColor",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "skinColor": {
-                    "name": "skinColor",
+                "gender": {
+                    "name": "gender",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -61,6 +47,13 @@ export const schema = {
                 },
                 "description": {
                     "name": "description",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "healthStatus": {
+                    "name": "healthStatus",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -137,5 +130,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "399db9c80a695b750c1ce2362cbd8f4a"
+    "version": "d0a161523c38be3420d8d1aa11bb7cf6"
 };

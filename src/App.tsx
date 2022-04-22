@@ -31,6 +31,7 @@ import MyReports from './pages/MyReports';
 import Safety from './pages/Safety';
 import MyAccount from './pages/MyAccount';
 import MyMap from './components/SetMapLocation';
+import ChangePassword from './pages/ChangePassword';
 
 Amplify.configure(awsconfig);
 // >>New - Configuring Auth Module
@@ -41,9 +42,9 @@ Storage.configure(awsconfig);
 setupIonicReact();
 
 const App: React.FC = () => {
-  
+
   return (
-    <Authenticator initialState="signUp" signUpAttributes={["email"]} loginMechanisms={['email']}>
+    <Authenticator initialState="signUp" signUpAttributes={["name", "family_name", "birthdate"]}>
       {({ signOut, user }) => (
        
           <IonApp>
@@ -70,6 +71,9 @@ const App: React.FC = () => {
                 </Route>
                 <Route exact path="/myAccount" >
                   <MyAccount />
+                </Route>
+                <Route exact path="/changePassword" >
+                  <ChangePassword />
                 </Route>
                 {/* <Route exact path="/myMap" >
                   <MyMap />

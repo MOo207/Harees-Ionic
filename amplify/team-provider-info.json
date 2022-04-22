@@ -18,14 +18,14 @@
           "region": "us-east-1"
         }
       },
-      "auth": {
-        "hareesapp01c7e63e": {}
-      },
       "function": {
         "hareesappb61f05a7": {
           "deploymentBucketName": "amplify-hareesapp-dev-165343-deployment",
           "s3Key": "amplify-builds/hareesappb61f05a7-5868414b503771314162-build.zip"
         }
+      },
+      "auth": {
+        "hareesappa40d6eea": {}
       }
     }
   }
